@@ -20,8 +20,8 @@ void ComboBox_AddStringOnce(HWND box, const wchar_t* str, int select, int def_se
 enum SORT {
 	SORT_INSENSITIVE = 0x04000000, ///< case insensitive compare
 	SORT_CUSTOMPARAM = 0x08000000, ///< custom sort by item data
-	SORT_ASC         = 0x10000000, ///< sort ascending ⏶
-	SORT_DEC         = 0x20000000, ///< sort descending ⏷
+	SORT_ASC         = 0x10000000, ///< sort ascending â¶
+	SORT_DEC         = 0x20000000, ///< sort descending â·
 	SORT_REMEMBER    = 0x40000000, ///< remember last applied sort by setting \c GetWindowLongPtr(hwnd,GWLP_USERDATA) \sa SORT_NEXT
 	SORT_NEXT        = 0x80000000 | SORT_REMEMBER, ///< continue sort by toggling or redoing previous; implies \c SORT_REMEMBER \sa SORT_REMEMBER
 };

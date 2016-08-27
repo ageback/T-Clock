@@ -25,7 +25,7 @@
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 #ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
-#pragma code_page(1252)
+#pragma code_page(936)
 #endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
@@ -37,9 +37,9 @@ IDR_MENU MENUEX
 BEGIN
     POPUP "",0,0,0
     BEGIN
-        MENUITEM "&Adjust date/time",               IDM_FWD_DATETIME,0,0
+        MENUITEM "调整日期/时间(&A)",               IDM_FWD_DATETIME,0,0
 //        MENUITEM "&Adjust date/time ex",               IDM_DATETIME_EX,0,0
-        MENUITEM "&Customize notification icons",   IDM_FWD_CUSTOMNOTIFYICONS,0,0
+        MENUITEM "自定义通知图标(&C)",   IDM_FWD_CUSTOMNOTIFYICONS,0,0
         MENUITEM "",0,MFT_SEPARATOR,0
         MENUITEM "Casca&de windows",                IDM_FWD_CASCADE,0,0
         MENUITEM "Show windows stack&ed",           IDM_FWD_STACKED,0,0
@@ -49,7 +49,7 @@ BEGIN
         MENUITEM "Minimize all windows",            IDM_FWD_MINALL,0,0
         MENUITEM "&Undo last window change",        IDM_FWD_UNDO,0,0
         MENUITEM "",0,MFT_SEPARATOR,0
-        MENUITEM "&Task Manager",                   IDM_FWD_TASKMAN,0,0
+        MENUITEM "任务管理器(&T)",                   IDM_FWD_TASKMAN,0,0
 //        MENUITEM "",0,MFT_SEPARATOR,0
 //        MENUITEM "&Lock the taskbar",               IDM_FWD_LOCKTASKBAR,0,0
 //        MENUITEM "&Lock all taskbars",              IDM_FWD_LOCKALLTASKBAR,0,0
@@ -57,8 +57,8 @@ BEGIN
         MENUITEM "",0,MFT_SEPARATOR,0
         POPUP "Sounds && Audio Options",IDC_SOUNDAUDIO,0,0
         BEGIN
-            MENUITEM "Open Volume Controls",        IDM_VOLUMECONTROL,0,0
-            MENUITEM "Audio devices",               IDM_AUDIOPROP,0,0
+            MENUITEM "打开音量控制",        IDM_VOLUMECONTROL,0,0
+            MENUITEM "音频设备",               IDM_AUDIOPROP,0,0
         END
         POPUP "Network Drive(s)",IDC_NETWORK,0,0
         BEGIN
@@ -67,42 +67,42 @@ BEGIN
         END
         POPUP "T-Clock Quickys",IDC_QUICKYS,0,0
         BEGIN
-            MENUITEM "Windows Explorer",            IDM_QUICKY_WINEXP,0,0
-            MENUITEM "Command Prompt",              IDM_QUICKY_DOS,0,0
+            MENUITEM "Windows 资源管理器",            IDM_QUICKY_WINEXP,0,0
+            MENUITEM "命令提示符",              IDM_QUICKY_DOS,0,0
             MENUITEM "",0,MFT_SEPARATOR,0
-            MENUITEM "T-Clock Calendar",            IDM_SHOWCALENDER,0,0
-            MENUITEM "Time Sync (SNTP) options",    IDM_SNTP,0,0
-            MENUITEM "Synchronize time",            IDM_SNTP_SYNC,0,0
+            MENUITEM "T-Clock 日历",            IDM_SHOWCALENDER,0,0
+            MENUITEM "时间同步(SNTP)选项",    IDM_SNTP,0,0
+            MENUITEM "同步时间",            IDM_SNTP_SYNC,0,0
             MENUITEM "",0,MFT_SEPARATOR,0
-            MENUITEM "Empty Recycle Bin",           IDM_QUICKY_EMPTYRB,0,0
+            MENUITEM "清空回收站",           IDM_QUICKY_EMPTYRB,0,0
         END
-        POPUP "T-Clock Alarms",IDC_ALARMS,0,0
+        POPUP "T-Clock 闹钟",IDC_ALARMS,0,0
         BEGIN
             MENUITEM "Hourly Chime",                IDM_CHIME,0,MFS_DISABLED
-            MENUITEM "Add/Edit Alarm",              IDM_PROP_ALARM,0,0
+            MENUITEM "添加/编辑闹钟",              IDM_PROP_ALARM,0,0
         END
-        POPUP "T-Clock Timers",IDC_TIMERS,0,0
+        POPUP "T-Clock 定时器",IDC_TIMERS,0,0
         BEGIN
-            MENUITEM "Stopwatch",                   IDM_STOPWATCH,0,0
-            MENUITEM "Watch List\t(running timers)", IDM_TIMEWATCH,0,0
-            MENUITEM "Reset Watch List",            IDM_TIMEWATCHRESET,0,MFS_DISABLED
-            MENUITEM "Add/Edit Timers",              IDM_TIMER,0,0
+            MENUITEM "秒表",                   IDM_STOPWATCH,0,0
+            MENUITEM "监视列表\t(正在运行的定时器)", IDM_TIMEWATCH,0,0
+            MENUITEM "重置监视列表",            IDM_TIMEWATCHRESET,0,MFS_DISABLED
+            MENUITEM "添加/编辑定时器",              IDM_TIMER,0,0
         END
-        MENUITEM "Display Properties",              IDM_DISPLAYPROP,0,0
+        MENUITEM "显示属性",              IDM_DISPLAYPROP,0,0
         MENUITEM "",0,MFT_SEPARATOR,0
-        MENUITEM "T-Clock Options",                 IDM_SHOWPROP,0,0
-        MENUITEM "Refresh T-Clock",                 IDM_REFRESHTCLOCK,0,0
+        MENUITEM "T-Clock 选项",                 IDM_SHOWPROP,0,0
+        MENUITEM "刷新 T-Clock",                 IDM_REFRESHTCLOCK,0,0
         MENUITEM "",0,MFT_SEPARATOR,0
-        POPUP "Exit Windows",IDC_EXITWIN,0,0
+        POPUP "退出窗口",IDC_EXITWIN,0,0
         BEGIN
-            MENUITEM "Log off",                     IDM_LOGOFF,0,0
-            MENUITEM "Reboot",                      IDM_REBOOT,0,0
-            MENUITEM "Shut Down",                   IDM_SHUTDOWN,0,0
+            MENUITEM "注销",                     IDM_LOGOFF,0,0
+            MENUITEM "重启",                      IDM_REBOOT,0,0
+            MENUITEM "关机",                   IDM_SHUTDOWN,0,0
         END
-        MENUITEM "Exit T-Clock",                    IDM_EXIT,0,0
+        MENUITEM "退出 T-Clock",                    IDM_EXIT,0,0
         MENUITEM "",IDS_NONE,MFT_SEPARATOR,0
-        MENUITEM "&Run...",                         IDM_FWD_RUNAPP,0,0
-        MENUITEM "E&xit Explorer",                  IDM_FWD_EXITEXPLORER,0,0
+        MENUITEM "运行(&R)...",                         IDM_FWD_RUNAPP,0,0
+        MENUITEM "退出资源管理器(&x)",                  IDM_FWD_EXITEXPLORER,0,0
     END
 END
 
