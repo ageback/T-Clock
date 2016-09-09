@@ -275,3 +275,32 @@ HRESULT SetXPWindowTheme(HWND hwnd, LPCWSTR pszSubAppName, LPCWSTR pszSubIdList)
 	THEME_FUNC_CHECK(SetWindowTheme,S_FALSE)
 	return pSetWindowTheme(hwnd,pszSubAppName,pszSubIdList);
 }
+
+
+HICON GetStockIcon(SHSTOCKICONID siid, unsigned flag) {
+	SHGetStockIconInfo_t SHGetStockIconInfo;
+	SHSTOCKICONINFO icon;
+	SHGetStockIconInfo = (SHGetStockIconInfo_t)GetProcAddress(GetModuleHandleA("shell32"), "SHGetStockIconInfo");
+	if(SHGetStockIconInfo) {
+		icon.cbSize = sizeof(icon);
+		if(SHGetStockIconInfo(SIID_SHIELD, SHGSI_ICON | flag, &icon) == S_OK)
+			return icon.hIcon;
+	} else {
+		switch(siid) {
+		case SIID_WARNING:
+			icon.hIcon = LoadIcon(NULL, IDI_WARNING);
+			break;
+		case SIID_SHIELD:
+		case SIID_INFO:
+			icon.hIcon = LoadIcon(NULL, IDI_INFORMATION);
+			break;
+		case SIID_ERROR:
+			icon.hIcon = LoadIcon(NULL, IDI_ERROR);
+			break;
+		default:
+			return NULL;
+		}
+		return CopyIcon(icon.hIcon);
+	}
+	return NULL;
+}

@@ -4,10 +4,19 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+/* libs: user32, gdi32, comdlg32, msimg32 */
+
 
 /*
 	GENERIC
 */
+/**
+ * \brief processes \c WM_ACTIVATE messages to set \c HWND_TOPMOST on activate and \c HWND_NOTOPMOST on deactivate
+ * \param hwnd receiving window
+ * \param wParam WM_ACTIVATE's wParam
+ * \param lParam WM_ACTIVATE's lParam
+ * \sa SetWindowPos(), HWND_TOPMOST, HWND_NOTOPMOST, WM_ACTIVATE, WA_ACTIVE, WA_CLICKACTIVE, WA_INACTIVE */
+void WM_ActivateTopmost(HWND hwnd, WPARAM wParam, LPARAM lParam);
 /**
  * \brief add a string if not already present and select it
  * \param box

@@ -38,11 +38,12 @@
       <PreprocessorDefinitions>_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>advapi32.lib;shell32.lib;user32.lib;psapi.lib;comctl32.lib;</AdditionalDependencies>
+      <AdditionalDependencies>advapi32.lib;shell32.lib;user32.lib;gdi32.lib;psapi.lib;comctl32.lib;comdlg32.lib;msimg32.lib;</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\common\clock.c" />
+    <ClCompile Include="..\common\control_extensions.c" />
     <ClCompile Include="..\common\utl.c" />
     <ClCompile Include="..\common\newapi.c" />
     <ClCompile Include="..\common\win2k_compat.c" />
@@ -52,6 +53,7 @@
     <ClInclude Include="..\common\resource.h" />
     <ClInclude Include="..\common\globals.h" />
     <ClInclude Include="..\common\clock.h" />
+    <ClInclude Include="..\common\control_extensions.h" />
     <ClInclude Include="..\common\utl.h" />
     <ClInclude Include="..\common\newapi.h" />
     <ClInclude Include="..\common\win2k_compat.h" />

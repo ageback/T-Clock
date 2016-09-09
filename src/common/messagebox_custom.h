@@ -40,8 +40,8 @@ typedef struct MessageBoxCustomData MessageBoxCustomData;
  * \param parent required parent window that receives \c WMBC_INITDIALOG and \c WMBC_CHECKS callbacks
  * \param message
  * \param title
- * \param style message box style flags such as MB_ICONINFORMATION|MB_DEFBUTTON3
- * \return -1/0 on failure, on success one of \c ID_MBC1 - \c ID_MBC4 or \c close_id
+ * \param style message box style flags such as \c MB_ICONINFORMATION|MB_DEFBUTTON3
+ * \return \c -1/0 on failure, on success one of \c ID_MBC1 to \c ID_MBC4 or \c close_id
  * \remark sends the callback message \c WMBC_INITDIALOG on creation to request \c MessageBoxCustomData structure
  * \remark set \c MessageBoxCustomData.close_id to desired value when user closes dialog (defaults to \c IDCANCEL)
  * \remark set \c MessageBoxCustomData.icon_title* to custom window icon \e (optional)
@@ -50,11 +50,11 @@ typedef struct MessageBoxCustomData MessageBoxCustomData;
 int MessageBoxCustom(HWND parent, const wchar_t* message, const wchar_t* title, unsigned style /* = MB_DEFBUTTON1 */);
 /**
  * \brief works like \c MessageBoxCustom() but doesn't require a parent window
- * \param[in,out] settings settings to use, will receive updated checkbox states
+ * \param[in,out] settings settings to use; receives updated checkbox states on return
  * \param[in] message
  * \param[in] title
- * \param[in] style message box style flags such as MB_ICONINFORMATION|MB_DEFBUTTON3
- * \return -1/0 on failure, on success one of \c ID_MBC1 - \c ID_MBC4 or \c close_id
+ * \param[in] style message box style flags such as \c MB_ICONINFORMATION|MB_DEFBUTTON3
+ * \return \c -1/0 on failure, on success one of \c ID_MBC1 to \c ID_MBC4 or \c close_id
  * \sa MessageBoxCustom() */
 int MessageBoxCustom_Direct(MessageBoxCustomData* settings, const wchar_t* message, const wchar_t* title, unsigned style /* = MB_DEFBUTTON1 */);
 

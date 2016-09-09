@@ -100,7 +100,7 @@ void SaveNewMenuOptions(HWND hDlg)
 		wsprintf(szmSwitches, FMT("%s%s"),
 			(!wcslen(szmText)?L"* Menu text can't be empty!\n":L""),
 			(!wcslen(szmTarget)?L"* Target file must be filled!":L""));
-		MessageBox(0,szmSwitches,L"ERROR: Missing Information!",MB_OK|MB_ICONERROR);
+		MessageBox(0, szmSwitches, L"ERROR: Missing Information!", MB_OK|MB_ICONERROR|MB_SETFOREGROUND);
 	}
 }
 /*---------------------------------------------------------------------------

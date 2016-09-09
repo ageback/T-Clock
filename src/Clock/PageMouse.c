@@ -254,7 +254,7 @@ INT_PTR CALLBACK Page_Mouse(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
 				SendPSChanged(hDlg);
 			}
 		}else if(id==666){
-			MessageBox(hDlg, L"You need to set at least one \"Context Menu\" action\nYou might be unable to control T-Clock otherwise", L"Invalid Setting", MB_OK|MB_ICONERROR);
+			MessageBox(hDlg, L"You need to set at least one \"Context Menu\" action\nYou might be unable to control T-Clock otherwise", L"Invalid Setting", MB_OK|MB_ICONERROR|MB_SETFOREGROUND);
 		}
 		return TRUE;}
 	case WM_NOTIFY:{

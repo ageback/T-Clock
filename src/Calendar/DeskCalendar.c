@@ -1,6 +1,7 @@
 #include "../common/globals.h"
 #include "../common/newapi.h"
 #include "../common/resource.h"
+#include "../common/control_extensions.h"
 #include <commctrl.h>
 #include <time.h>
 //other
@@ -115,27 +116,21 @@ LRESULT CALLBACK Window_Calendar(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 			MonthCal_SetCurSel(hCal,&st);
 		}
 		SetFocus(hCal);
-		AdjustWindowRectEx(&rc,WS_CAPTION|WS_POPUP|WS_SYSMENU|WS_VISIBLE,FALSE,0);
-		SetWindowPos(hwnd,HWND_TOP,0,0, rc.right-rc.left,rc.bottom-rc.top, SWP_NOMOVE);//force to be on top
+		AdjustWindowRectEx(&rc, (WS_CAPTION | WS_POPUP | WS_SYSMENU | WS_VISIBLE), FALSE, 0);
+		SetWindowPos(hwnd, HWND_TOP, 0,0, (rc.right - rc.left), (rc.bottom - rc.top), SWP_NOMOVE);//force to be on top
 		if(m_bTopMost)
-			SetWindowPos(hwnd,HWND_TOPMOST,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE);
+			SetWindowPos(hwnd, HWND_TOPMOST, 0,0, 0,0, (SWP_NOMOVE | SWP_NOSIZE));
 		api.PositionWindow(hwnd, (api.OS<TOS_WIN10 && api.OS>=TOS_WIN7 ? 11 : 0));
-		if(m_bAutoClose && GetForegroundWindow()!=hwnd)
-			PostMessage(hwnd,WM_CLOSE,0,0);
+		if(m_bAutoClose && GetForegroundWindow() != hwnd)
+			PostMessage(hwnd, WM_CLOSE, 0, 0);
 		return 0;}
 	case WM_ACTIVATE:
 		if(!m_bTopMost){
-			if(LOWORD(wParam)==WA_ACTIVE || LOWORD(wParam)==WA_CLICKACTIVE){
-				SetWindowPos(hwnd,HWND_TOPMOST_nowarn,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE|SWP_NOACTIVATE);
-			}else{
-				SetWindowPos(hwnd,HWND_NOTOPMOST_nowarn,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE|SWP_NOACTIVATE);
-				// actually it should be lParam, but that's "always" NULL for other process' windows
-				SetWindowPos(GetForegroundWindow(),HWND_TOP,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE|SWP_NOACTIVATE);
-			}
+			WM_ActivateTopmost(hwnd, wParam, lParam);
 		}
 		if(m_bAutoClose){
-			if(LOWORD(wParam)!=WA_ACTIVE && LOWORD(wParam)!=WA_CLICKACTIVE){
-				PostMessage(hwnd,WM_CLOSE,0,0);//adds a little more delay which is good
+			if(LOWORD(wParam) == WA_INACTIVE){
+				PostMessage(hwnd, WM_CLOSE, 0, 0);//adds a little more delay which is good
 			}
 		}
 		break;

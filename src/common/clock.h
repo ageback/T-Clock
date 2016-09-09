@@ -84,7 +84,7 @@ struct TClockAPI {
  * \param parent can be NULL
  * \param msg
  * \param title
- * \param uType any of \c MB_OK, \c MB_OKCANCEL, \c MB_RETRYCANCEL, \c MB_YESNO, \c MB_YESNOCANCEL, ...
+ * \param uType any of \c MB_OK, \c MB_OKCANCEL, \c MB_RETRYCANCEL, \c MB_YESNO, \c MB_YESNOCANCEL, \c MB_SETFOREGROUND ...
  * \param uBeep \c MB_ICON* constant, \c MB_OK (default beep) or \c -1U ( \c 0xFFFFFFFF ) for silence
  * \return zero on error. Otherwise the button pressed such as \c IDOK, \c IDCANCEL
  * \sa MessageBox(), MessageBoxEx(), MessageBoxIndirect(), MessageBeep() */

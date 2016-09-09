@@ -5,6 +5,16 @@
 /*
 	GENERIC
 */
+void WM_ActivateTopmost(HWND hwnd, WPARAM wParam, LPARAM lParam) {
+	(void)lParam;
+	if(LOWORD(wParam) != WA_INACTIVE) {
+		SetWindowPos(hwnd, HWND_TOPMOST_nowarn, 0,0,0,0, (SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE));
+	} else {
+		SetWindowPos(hwnd, HWND_NOTOPMOST_nowarn, 0,0,0,0, (SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE));
+		// actually it should be lParam, but that's "always" NULL for other process' windows
+		SetWindowPos(GetForegroundWindow(), HWND_TOP, 0,0,0,0, (SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE));
+	}
+}
 
 void ComboBox_AddStringOnce(HWND box, const wchar_t* str, int select, int def_select)
 {

@@ -29,7 +29,8 @@ void InitFormat(const wchar_t* section, SYSTEMTIME* lt)   //--------------------
 	GetLocaleInfo(ilang, LOCALE_IDEFAULTANSICODEPAGE|LOCALE_RETURN_NUMBER, (wchar_t*)&m_codepage, sizeof(m_codepage));
 	if(!IsValidCodePage(m_codepage)) m_codepage=CP_ACP;
 	
-	i = lt->wDayOfWeek; i--; if(i < 0) i = 6;
+	i = lt->wDayOfWeek - 1;
+	if(i < 0) i = 6;
 	
 	GetLocaleInfo(ilang, LOCALE_SABBREVDAYNAME1 + i, m_DayOfWeekShort, _countof(m_DayOfWeekShort));
 //	GetLocaleInfo(ilang, LOCALE_SSHORTESTDAYNAME1 + i, DayOfWeekShort, _countof(DayOfWeekShort)); // Vista+
@@ -127,26 +128,27 @@ unsigned MakeFormat(wchar_t buf[FORMAT_MAX_SIZE], const wchar_t* fmt, SYSTEMTIME
 				*out++ = (wchar_t)((int)pt->wMonth % 10) + '0';
 			}
 		} else if(*fmt == 'a' && fmt[1] == 'a' && fmt[2] == 'a') {
-			if(*(fmt + 3) == 'a') {
-				fmt += 4;
-				for(pos=m_DayOfWeekLong; *pos; ) *out++=*pos++;
+			fmt += 3;
+			if(*fmt == 'a') {
+				++fmt;
+				pos = m_DayOfWeekLong;
 			} else {
-				fmt += 3;
-				for(pos=m_DayOfWeekShort; *pos; ) *out++=*pos++;
+				pos = m_DayOfWeekShort;
 			}
+			for(; *pos; *out++ = *pos++);
 		} else if(*fmt=='d') {
 			if(fmt[1]=='d' && fmt[2]=='e'){
 				fmt+=3;
 				for(pos=m_DayOfWeekEng[pt->wDayOfWeek]; *pos; ) *out++=*pos++;
 			}else if(fmt[1]=='d' && fmt[2]=='d') {
-				fmt+=3;
-				if(*fmt=='d'){
+				fmt += 3;
+				if(*fmt == 'd'){
 					++fmt;
-					pos=m_DayOfWeekLong;
+					pos = m_DayOfWeekLong;
 				}else{
-					pos=m_DayOfWeekShort;
+					pos = m_DayOfWeekShort;
 				}
-				for(; *pos; ) *out++=*pos++;
+				for(; *pos; *out++ = *pos++);
 			}else{
 				if(fmt[1]=='d') {
 					fmt+=2;
@@ -340,6 +342,17 @@ unsigned MakeFormat(wchar_t buf[FORMAT_MAX_SIZE], const wchar_t* fmt, SYSTEMTIME
 			}
 			if(specifier)
 				out += api.WriteFormatNum(out, num, width, padding);
+		} else if(fmt[0] == 'w') { // numeric Day-of-Week
+			int weekday = pt->wDayOfWeek;
+			++fmt;
+			if(*fmt == 'i' || *fmt == 'u') {
+				++fmt;
+				if(!weekday && *fmt == 'i')
+					weekday = 7;
+				*out++ = '0' + weekday;
+			} else {
+				*out++ = 'w';
+			}
 		} else if(*fmt == 'W') { // Week-of-Year
 			char buf[4];
 			int width, padding, num;

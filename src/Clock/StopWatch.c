@@ -285,13 +285,7 @@ static INT_PTR CALLBACK Window_Stopwatch(HWND hwnd, UINT msg, WPARAM wParam, LPA
 		break;}
 	/// handling
 	case WM_ACTIVATE:
-		if(LOWORD(wParam)==WA_ACTIVE || LOWORD(wParam)==WA_CLICKACTIVE){
-			SetWindowPos(hwnd,HWND_TOPMOST_nowarn,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE|SWP_NOACTIVATE);
-		}else{
-			SetWindowPos(hwnd,HWND_NOTOPMOST_nowarn,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE|SWP_NOACTIVATE);
-			// actually it should be lParam, but that's "always" NULL for other process' windows
-			SetWindowPos(GetForegroundWindow(),HWND_TOP,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE|SWP_NOACTIVATE);
-		}
+		WM_ActivateTopmost(hwnd, wParam, lParam);
 		break;
 	case WM_CTLCOLORSTATIC:
 		if((HWND)lParam!=GetDlgItem(hwnd,IDC_SW_ELAPSED))
@@ -449,8 +443,11 @@ static INT_PTR CALLBACK Window_StopwatchExportDlg(HWND hDlg, UINT msg, WPARAM wP
 		Edit_SetSel(GetDlgItem(hDlg,IDC_SWE_OUT), 0, -1);
 		SetFocus(GetDlgItem(hDlg,IDC_SWE_OUT));
 		return FALSE;}
-	case WM_DESTROY:{
-		break;}
+	case WM_DESTROY:
+		break;
+	case WM_ACTIVATE:
+		WM_ActivateTopmost(hDlg, wParam, lParam);
+		break;
 	case WM_COMMAND: {
 			switch(LOWORD(wParam)) {
 			case IDC_SWE_EXPORT:{

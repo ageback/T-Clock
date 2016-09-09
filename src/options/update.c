@@ -351,7 +351,7 @@ static INT_PTR CALLBACK Window_UpdateCheckDlg(HWND hDlg, UINT uMsg, WPARAM wPara
 								msg_pos += swprintf(msg_pos, msg_end-msg_pos, FMT("\n"));
 						}
 					}
-					child_id = MessageBoxCustom(hDlg, msg, L"T-Clock updates", MB_ICONINFORMATION);
+					child_id = MessageBoxCustom(hDlg, msg, L"T-Clock updates", MB_ICONINFORMATION|MB_SETFOREGROUND);
 					switch(child_id) {
 					case ID_MBC1:
 						api.ExecFile(kDownloadURL, hDlg);

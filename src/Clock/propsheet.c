@@ -106,13 +106,7 @@ LRESULT CALLBACK Window_PropertySheet_Hooked(HWND hwnd, UINT message, WPARAM wPa
 		#endif
 		break;
 	case WM_ACTIVATE:
-		if(LOWORD(wParam)==WA_ACTIVE || LOWORD(wParam)==WA_CLICKACTIVE){
-			SetWindowPos(hwnd,HWND_TOPMOST_nowarn,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE|SWP_NOACTIVATE);
-		}else{
-			SetWindowPos(hwnd,HWND_NOTOPMOST_nowarn,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE|SWP_NOACTIVATE);
-			// actually it should be lParam, but that's "always" NULL for other process' windows
-			SetWindowPos(GetForegroundWindow(),HWND_TOP,0,0,0,0,SWP_NOMOVE|SWP_NOSIZE|SWP_NOACTIVATE);
-		}
+		WM_ActivateTopmost(hwnd, wParam, lParam);
 		break;
 	case WM_COMMAND:{
 		LRESULT ret=CallWindowProc(m_oldWndProc, hwnd, message, wParam, lParam);

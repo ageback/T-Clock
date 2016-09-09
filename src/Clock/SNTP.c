@@ -31,7 +31,6 @@ enum{
 
 BOOL GetSetTimePermissions();
 
-static void OnInit(HWND hDlg);
 static void OnBrowseAction(HWND hDlg, WORD id);
 static INT_PTR CALLBACK Window_SNTPConfig(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam);
 //================================================================================================
@@ -72,7 +71,7 @@ void Log(const char* msg)   //--------------------------------------------------
 	}
 	
 	if(m_flags&SNTPF_MESSAGE) {
-		MessageBoxA(0, logmsg, "T-Clock Time Sync", MB_OK);
+		MessageBoxA(0, logmsg, "T-Clock Time Sync", MB_OK|MB_SETFOREGROUND);
 	}
 }
 //================================================================================================
@@ -179,7 +178,7 @@ void ReceiveSNTPReply(SOCKET sock)   //-----------------------------------------
 	if(retval == -1){
 		char szErr[MIN_BUFF];
 		wsprintfA(szErr, "Receive SOCKET ERROR: %d", WSAGetLastError());
-		MessageBoxA(0, szErr, "Time Sync Failed", MB_OK|MB_ICONERROR); // @todo : SocketClose can also show this message
+		MessageBoxA(0, szErr, "Time Sync Failed", MB_OK|MB_ICONERROR|MB_SETFOREGROUND); // @todo : SocketClose can also show this message
 		SocketClose(sock, szErr);
 		return;
 	}
@@ -241,7 +240,7 @@ SOCKET OpenTimeSocket(const wchar_t* server)
 		case EAI_MEMORY: strcpy(szErr, "out of memory"); break;
 		default:
 			wsprintfA(szErr, "getaddrinfo ERROR: %d", WSAGetLastError());
-			MessageBoxA(0, szErr, "Time Sync Failed", MB_OK|MB_ICONERROR);
+			MessageBoxA(0, szErr, "Time Sync Failed", MB_OK|MB_ICONERROR|MB_SETFOREGROUND);
 		}
 		SocketClose((SOCKET)-1, szErr);
 		return (SOCKET)-1;
@@ -274,7 +273,7 @@ SOCKET OpenTimeSocket(const wchar_t* server)
 	if(sock == -1) {
 		freeaddrinfo(addrs);
 		wsprintfA(szErr, "socket ERROR: %d", WSAGetLastError());
-		MessageBoxA(0, szErr, "Time Sync Failed", MB_OK|MB_ICONERROR);
+		MessageBoxA(0, szErr, "Time Sync Failed", MB_OK|MB_ICONERROR|MB_SETFOREGROUND);
 		SocketClose(sock, szErr);
 		return (SOCKET)-1;
 	}
@@ -284,7 +283,7 @@ SOCKET OpenTimeSocket(const wchar_t* server)
 	retval = SNTPSend(sock, &serv_addr);
 	if(retval == -1) {
 		wsprintfA(szErr, "SNTPSend ERROR: %d", WSAGetLastError());
-		MessageBoxA(0, szErr, "Time Sync Failed", MB_OK|MB_ICONERROR);
+		MessageBoxA(0, szErr, "Time Sync Failed", MB_OK|MB_ICONERROR|MB_SETFOREGROUND);
 		SocketClose(sock, szErr);
 		return (SOCKET)-1;
 	}
@@ -311,7 +310,7 @@ void SyncTimeNow()
 	api.GetStrEx(m_subkey, L"Server", server, _countof(server), L"");
 	if(!server[0]) {
 		wsprintf(szErr, FMT("No SNTP Server Specified!"));
-		MessageBox(0, szErr, L"Time Sync Failed", MB_OK|MB_ICONERROR);
+		MessageBox(0, szErr, L"Time Sync Failed", MB_OK|MB_ICONERROR|MB_SETFOREGROUND);
 		if(!g_hDlgSNTP)
 			NetTimeConfigDialog(0);
 		return;
@@ -320,13 +319,13 @@ void SyncTimeNow()
 	retval = WSAStartup(wVersionRequested, &wsaData);
 	if(retval) { //-----------------------------------------+++--> If WinSock Startup Fails...
 		wsprintf(szErr, FMT("Error initializing WinSock"));
-		MessageBox(0, szErr, L"Time Sync Failed", MB_OK|MB_ICONERROR);
+		MessageBox(0, szErr, L"Time Sync Failed", MB_OK|MB_ICONERROR|MB_SETFOREGROUND);
 		return;
 	}
 	
 	if(wsaData.wVersion != wVersionRequested) { //-+++-> Check WinSOCKET's Version:
 		wsprintf(szErr, FMT("WinSock version not supported"));
-		MessageBox(0, szErr, L"Time Sync Failed", MB_OK|MB_ICONERROR);
+		MessageBox(0, szErr, L"Time Sync Failed", MB_OK|MB_ICONERROR|MB_SETFOREGROUND);
 		return;
 	}
 	
@@ -393,83 +392,9 @@ void OkaySave(HWND hDlg)   //---------------------------------------------------
 	}
 	api.SetInt(m_subkey, L"ServerNum", count);
 }
-//================================================================================================
-//------------------------------------------------------+++--> SNTP Configuration Dialog Procedure:
-INT_PTR CALLBACK Window_SNTPConfig(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-	switch(msg)  {
-	case WM_INITDIALOG:
-		OnInit(hDlg);
-		if(lParam) // justElevated
-			PostMessage(hDlg, WM_COMMAND, MAKEWPARAM(IDCB_SYNCNOW,BN_CLICKED), (LPARAM)GetDlgItem(hDlg,IDCB_SYNCNOW));
-		return TRUE;
-	case WM_DESTROY:
-		g_hDlgSNTP = NULL;
-		break;
-	case WM_CLOSE:
-		if(!lParam && wParam == 1)
-			OkaySave(hDlg);
-		break;
-		
-	case WM_COMMAND:
-		switch(LOWORD(wParam))  {
-		case IDCB_SYNCNOW:{
-			if(m_flags&SNTPF_UAC){
-				api.ExecElevated(GetClockExe(),L"/UAC /SyncOpt",hDlg);
-				return TRUE;
-			}
-			OkaySave(hDlg);
-			SyncTimeNow();
-			return TRUE;}
-			
-		case IDCBX_SNTPLOG:
-			m_flags ^= SNTPF_LOG;
-			return TRUE;
-		case IDCBX_SNTPMESSAGE:
-			m_flags ^= SNTPF_MESSAGE;
-			return TRUE;
-			
-		case IDCB_SYNCSOUNDBROWSE:
-			OnBrowseAction(hDlg, IDCBX_SYNCSOUND);
-			return TRUE;
-			
-		case IDCB_CLEAR:{
-			wchar_t logfile[MAX_PATH];
-			FILE* fp;
-			HWND hList = GetDlgItem(hDlg, IDC_LIST);
-			ListView_DeleteAllItems(hList);
-			
-			memcpy(logfile, api.root, api.root_size);
-			add_title(logfile, L"SNTP.log");
-			fp = _wfopen(logfile, L"wb");
-			if(fp) fclose(fp);
-			return TRUE;}
-		
-		case IDCB_DELSERVER:{
-			HWND hServer = GetDlgItem(hDlg,IDCBX_NTPSERVER);
-			int index = ComboBox_GetCurSel(hServer);
-			if(index != CB_ERR){
-				ComboBox_DeleteString(hServer, index);
-			}
-			ComboBox_SetCurSel(hServer, 0);
-			return TRUE;}
-			
-		case IDOK:
-			OkaySave(hDlg);
-			/* fall through */
-		case IDCANCEL:
-			DestroyWindow(hDlg);
-			return TRUE;
-		}
-	}
-	return FALSE;
-}
-//=================//=====//>>>>>---------------------------------------------+++-->
-#include <stdio.h> //-----//--+++--> Required Here For Log FILE Open Functions Only.
-//=================//=====//======================================================================
-//------------------------//---------------------------+++--> To-Do List for Dialog Initialization:
-void OnInit(HWND hDlg)   //-----------------------------------------------------------------+++-->
-{
+
+
+static void OnSNTPInit(HWND hDlg, LPARAM just_elevated) {
 	union {
 		wchar_t w[MAX_BUFF];
 		char a[MAX_BUFF];
@@ -481,6 +406,7 @@ void OnInit(HWND hDlg)   //-----------------------------------------------------
 	HWND hList = GetDlgItem(hDlg,IDC_LIST);
 	HWND hServer = GetDlgItem(hDlg,IDCBX_NTPSERVER);
 	HWND sound_cb = GetDlgItem(hDlg,IDCBX_SYNCSOUND);
+	HWND button_sync = GetDlgItem(hDlg, IDCB_SYNCNOW);
 	
 	api.PositionWindow(hDlg,21);
 	
@@ -542,9 +468,8 @@ void OnInit(HWND hDlg)   //-----------------------------------------------------
 	
 	// Test For: SE_SYSTEMTIME_NAME Priviledge Before Enabling Sync Now Button:
 	if(!HaveSetTimePermissions()){
-		HWND hwndSync = GetDlgItem(hDlg, IDCB_SYNCNOW);
 		m_flags |= SNTPF_UAC;
-		Button_SetElevationRequiredState(hwndSync, 1);
+		Button_SetElevationRequiredState(button_sync, 1);
 	}
 	
 	// Load the Time Synchronization Log File:
@@ -568,6 +493,81 @@ void OnInit(HWND hDlg)   //-----------------------------------------------------
 		}
 		fclose(stReport);
 	}
+	
+	if(just_elevated && !(m_flags & SNTPF_UAC))
+		PostMessage(hDlg, WM_COMMAND, MAKEWPARAM(IDCB_SYNCNOW,BN_CLICKED), (LPARAM)button_sync);
+}
+//================================================================================================
+//------------------------------------------------------+++--> SNTP Configuration Dialog Procedure:
+INT_PTR CALLBACK Window_SNTPConfig(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	switch(msg)  {
+	case WM_INITDIALOG:
+		OnSNTPInit(hDlg, lParam);
+		return TRUE;
+	case WM_DESTROY:
+		g_hDlgSNTP = NULL;
+		break;
+	case WM_CLOSE:
+		if(!lParam && wParam == 1)
+			OkaySave(hDlg);
+		break;
+	case WM_ACTIVATE:
+		WM_ActivateTopmost(hDlg, wParam, lParam);
+		break;
+		
+	case WM_COMMAND:
+		switch(LOWORD(wParam))  {
+		case IDCB_SYNCNOW:{
+			if(m_flags&SNTPF_UAC){
+				api.ExecElevated(GetClockExe(),L"/UAC /SyncOpt",hDlg);
+				return TRUE;
+			}
+			OkaySave(hDlg);
+			SyncTimeNow();
+			return TRUE;}
+			
+		case IDCBX_SNTPLOG:
+			m_flags ^= SNTPF_LOG;
+			return TRUE;
+		case IDCBX_SNTPMESSAGE:
+			m_flags ^= SNTPF_MESSAGE;
+			return TRUE;
+			
+		case IDCB_SYNCSOUNDBROWSE:
+			OnBrowseAction(hDlg, IDCBX_SYNCSOUND);
+			return TRUE;
+			
+		case IDCB_CLEAR:{
+			wchar_t logfile[MAX_PATH];
+			FILE* fp;
+			HWND hList = GetDlgItem(hDlg, IDC_LIST);
+			ListView_DeleteAllItems(hList);
+			
+			memcpy(logfile, api.root, api.root_size);
+			add_title(logfile, L"SNTP.log");
+			fp = _wfopen(logfile, L"wb");
+			if(fp) fclose(fp);
+			return TRUE;}
+		
+		case IDCB_DELSERVER:{
+			HWND hServer = GetDlgItem(hDlg,IDCBX_NTPSERVER);
+			int index = ComboBox_GetCurSel(hServer);
+			if(index != CB_ERR){
+				ComboBox_DeleteString(hServer, index);
+			}
+			ComboBox_SetCurSel(hServer, 0);
+			return TRUE;}
+			
+		case IDOK:
+			OkaySave(hDlg);
+			/* fall through */
+		case IDCANCEL:
+			DestroyWindow(hDlg);
+			return TRUE;
+		}
+	}
+	return FALSE;
 }
 //================================================================================================
 //----------------------------------------//---------------+++--> Browse for Sync Event Sound File:

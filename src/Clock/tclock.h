@@ -268,6 +268,13 @@ void HotkeyBox_SetValue(HWND box, hotkey_t hotkey);
  * \param want_register \c 0 to remove them, \c 1 to add them, \c 2 for re-registration
  * \sa RegisterHotKey(), UnregisterHotKey() */     
 void RegisterHotkeys(HWND hwnd, int want_register);
+/**
+ * \brief processes \c WM_HOTKEY messages (feature requested from \c eweoma at \c DonationCoder.com)
+ * \param hwnd receiving window
+ * \param wParam received wParam
+ * \param lParam received lParam
+ * \sa RegisterHotKey(), UnregisterHotKey() */
+LRESULT HotkeyMessage(HWND hwnd, WPARAM wParam, LPARAM lParam);
 
 // SNTP.c
 void SyncTimeNow();

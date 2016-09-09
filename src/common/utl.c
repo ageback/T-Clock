@@ -381,3 +381,45 @@ HWND CreateDialogParamOnce(HWND* hwnd, HINSTANCE hInstance, const wchar_t* lpTem
 	}
 	return *hwnd;
 }
+
+HBITMAP CreateBitmapWithAlpha(HDC hdc, int width, int height) {
+	BITMAPINFO bmi = {0};
+	bmi.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
+	bmi.bmiHeader.biPlanes = 1;
+	bmi.bmiHeader.biCompression = BI_RGB;
+	bmi.bmiHeader.biWidth = width;
+	bmi.bmiHeader.biHeight = height;
+	bmi.bmiHeader.biBitCount = 32;
+	return CreateDIBSection(hdc, &bmi, DIB_RGB_COLORS, NULL, NULL, 0);
+}
+
+HBITMAP GetBitmapFromIcon(HICON icon, int size) {
+	HDC screen = GetDC(NULL);
+	HDC dc = CreateCompatibleDC(screen);
+	HBITMAP bitmap;
+	HGDIOBJ old;
+	int width, height;
+	if(size == 0) {
+		width = GetSystemMetrics(SM_CXICON);
+		height = GetSystemMetrics(SM_CYICON);
+	/* } else if(size == -2) {
+		// returned values are wrong, eg. 15px instead of 16px at 100% scaling (Win10)
+		// see: http://trac.wxwidgets.org/ticket/17290
+		width = GetSystemMetrics(SM_CXMENUCHECK);
+		height = GetSystemMetrics(SM_CYMENUCHECK);// */
+	} else if(size < 0) {
+		width = GetSystemMetrics(SM_CXSMICON);
+		height = GetSystemMetrics(SM_CYSMICON);
+	} else {
+		width = height = size;
+	}
+	bitmap = CreateBitmapWithAlpha(dc, width, height);
+	old = SelectObject(dc, bitmap);
+	
+	ReleaseDC(NULL, screen);
+	DrawIconEx(dc, 0, 0, icon, width, height, 0, NULL, DI_NORMAL);
+	SelectObject(dc, old);
+	DeleteDC(dc);
+
+	return bitmap;
+}

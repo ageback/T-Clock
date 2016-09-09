@@ -547,13 +547,7 @@ INT_PTR CALLBACK Window_Timer(HWND hwnd, UINT message, WPARAM wParam, LPARAM lPa
 		OnTimerEditDestroy(hwnd);
 		break;
 	case WM_ACTIVATE:
-		if(LOWORD(wParam)==WA_ACTIVE || LOWORD(wParam)==WA_CLICKACTIVE){
-			SetWindowPos(hwnd, HWND_TOPMOST_nowarn, 0,0,0,0, (SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE));
-		}else{
-			SetWindowPos(hwnd, HWND_NOTOPMOST_nowarn, 0,0,0,0, (SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE));
-			// actually it should be lParam, but that's "always" NULL for other process' windows
-			SetWindowPos(GetForegroundWindow(), HWND_TOP, 0,0,0,0, (SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE));
-		}
+		WM_ActivateTopmost(hwnd, wParam, lParam);
 		break;
 		
 	case WM_COMMAND: {
@@ -830,7 +824,7 @@ static void RemoveFromWatch(HWND hWnd, HWND list, int index) {
 	}
 	
 	wsprintf(caption, FMT("Cancel Timer (%s) Also?"), item.pszText);
-	idx = MessageBox(hWnd, message, caption, MB_YESNOCANCEL|MB_ICONQUESTION);
+	idx = MessageBox(hWnd, message, caption, MB_YESNOCANCEL|MB_ICONQUESTION|MB_SETFOREGROUND);
 	
 	item.mask = LVIF_PARAM;
 	ListView_GetItem(list, &item); // get up-to-date data
@@ -899,7 +893,7 @@ INT_PTR CALLBACK Window_TimerView(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lPa
 	case WM_ACTIVATE:
 		#define ADD_OVERLAY_EXSTYLE (WS_EX_TRANSPARENT /*| WS_EX_LAYERED*/ | WS_EX_TOOLWINDOW)
 		#define REM_OVERLAY_STYLE (WS_CAPTION | WS_SYSMENU)
-		if(LOWORD(wParam)==WA_ACTIVE || LOWORD(wParam)==WA_CLICKACTIVE){
+		if(LOWORD(wParam) != WA_INACTIVE){
 			if(m_watch_flags & WF_OVERLAY) {
 				LONG_PTR style;
 				style = GetWindowLongPtr(hwnd, GWL_EXSTYLE);

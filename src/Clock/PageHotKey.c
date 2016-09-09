@@ -29,6 +29,31 @@ void SetHotkey(int idx, hotkey_t hotkey) {
 	}
 }
 
+LRESULT HotkeyMessage(HWND hwnd, WPARAM wParam, LPARAM lParam) {
+	(void)lParam;
+	switch(wParam) { // And a Damn Fine Request it Was... :-)
+	case HK_TIMER_ADD:
+		SendMessage(hwnd, WM_COMMAND, IDM_TIMER, 0);
+		break;
+	case HK_TIMER_WATCH:
+		SendMessage(hwnd, WM_COMMAND, IDM_TIMEWATCH, 0);
+		break;
+	case HK_STOPWATCH:
+		SendMessage(hwnd, WM_COMMAND, IDM_STOPWATCH, 0);
+		break;
+	case HK_SETTINGS:
+		SendMessage(hwnd, WM_COMMAND, IDM_SHOWPROP, 0);
+		break;
+	case HK_CALENDAR:
+		SendMessage(hwnd, WM_COMMAND, IDM_SHOWCALENDER, 0);
+		break;
+	case HK_SNTP:
+		SendMessage(hwnd, WM_COMMAND, IDM_SNTP_SYNC, 0);
+		break;
+	}
+	return 0;
+}
+
 // HOTKEY_CLASS translation list
 const uint8_t kHotkeyBox_ExKeys[][3] = {
 	// key , "normal" , "extended" (HOTKEYF_EXT)

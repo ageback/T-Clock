@@ -279,7 +279,7 @@ static void __cdecl MessageThread(void* param){
 		if(data->msg)
 			wcsftime(data->msg, 128, L"Your alarm expired on\n%A %H:%M", localtime(&tt));
 	}
-	api.Message(NULL, data->msg, data->title, MB_OK|(m_flags&BFLAG_TOPMOST?MB_SYSTEMMODAL:0),MB_OK);
+	api.Message(NULL, data->msg, data->title, MB_OK|MB_SETFOREGROUND|(m_flags&BFLAG_TOPMOST?MB_SYSTEMMODAL:0), MB_OK);
 	KillTimer(data->hwnd, ID_DOGGIE);
 	m_caption = NULL;
 	free(data->msg);

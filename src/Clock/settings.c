@@ -106,7 +106,7 @@ int ParseSettings(){
 							L"Some settings might not be readable\n"
 							L"by this older version and you could loose them.\n"
 							L"\n"
-							L"Run this version anyway?", L"T-Clock downgraded?", MB_OKCANCEL|MB_ICONINFORMATION);
+							L"Run this version anyway?", L"T-Clock downgraded?", MB_OKCANCEL|MB_ICONINFORMATION|MB_SETFOREGROUND);
 		if(ans != IDOK)
 			return -1;
 		ConvertSettings(ver); // should do nothing, just downgrade our version number
@@ -140,7 +140,7 @@ int ParseSettings(){
 				}
 			}
 			pos += wsprintf(pos, FMT("\n\nRun T-Clock and convert settings now?"));
-			ans = MessageBox(NULL, msg, L"You've just updated T-Clock", MB_OKCANCEL|MB_ICONINFORMATION);
+			ans = MessageBox(NULL, msg, L"You've just updated T-Clock", MB_OKCANCEL|MB_ICONINFORMATION|MB_SETFOREGROUND);
 		}else // silent update
 			ans = IDOK;
 		if(ans != IDOK)

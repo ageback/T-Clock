@@ -16,6 +16,8 @@ SHARED wchar_t ms_inifile[MAX_PATH] = {0};
 
 SHARED HWND gs_hwndTClockMain = NULL;
 SHARED HWND gs_hwndClock = NULL;
+SHARED HWND gs_tray = NULL;
+SHARED HWND gs_taskbar = NULL;
 SHARED HWND gs_hwndCalendar = NULL;
 SHARED unsigned short gs_tos = 0;
 #ifndef __GNUC__
@@ -340,12 +342,13 @@ void Clock_Exit()
 	if(gs_hwndClock && IsWindow(gs_hwndClock)){
 		HANDLE lock;
 		SendMessage(gs_hwndClock,WM_COMMAND,IDM_EXIT,0); // kill our clock
-		lock = OpenSemaphore(SYNCHRONIZE, 0, kConfigName+1);
+		lock = OpenSemaphore(SYNCHRONIZE|SEMAPHORE_MODIFY_STATE, 0, kConfigName+1);
 		WaitForSingleObject(lock, INFINITE);
 		ReleaseSemaphore(lock, 1, NULL);
 		CloseHandle(lock);
 		Sleep(1); // hopefully useless sleep
 		
+		gs_taskbar = gs_tray = NULL;
 		gs_hwndClock = NULL;
 	}
 }

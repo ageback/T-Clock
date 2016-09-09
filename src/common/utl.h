@@ -100,6 +100,21 @@ int HaveSetTimePermissions();
  * \return created or previous \p hwnd
  * \sa CreateDialogParam() */
 HWND CreateDialogParamOnce(HWND* hwnd, HINSTANCE hInstance, const wchar_t* lpTemplateName, HWND hWndParent, DLGPROC lpDialogFunc, LPARAM dwInitParam);
+/**
+ * \brief creates an 32bit ARGB bitmap
+ * \param hdc target DC of the newly created bitmap
+ * \param width new bitmap's width
+ * \param height new bitmap's height
+ * \return created bitmap or \c NULL on error
+ * \sa CreateDIBSection() */
+HBITMAP CreateBitmapWithAlpha(HDC hdc, int width, int height);
+/**
+ * \brief convert \c HICON to 32bit ARGB \c HBITMAP for use by context menus and other controls
+ * \param icon
+ * \param size icon dimensions or \c 0 for "32x32" \c SM_C*ICON, \c -1 for "16x16" \c SM_C*SMICON, \c -2 for \c SM_C*MENUCHECK
+ * \return bitmap or \c NULL on error
+ * \sa GetSystemMetrics(), SM_CXICON, SM_CYICON, SM_CXSMICON, SM_CYSMICON */
+HBITMAP GetBitmapFromIcon(HICON icon, int size);
 #ifdef __cplusplus
 }
 #endif

@@ -40,6 +40,9 @@ HWND Clock_GetCalendar() {
 			POINT pt;
 		} u;
 		GetWindowRect(hwnd, &u.rc);
+		// following is somehow required... 2px is enough though
+		u.pt.x += 25;
+		u.pt.y += 25;
 		// IsWindowVisible()/IsWindowEnabled() are always true
 		if(ChildWindowFromPointEx(GetDesktopWindow(), u.pt, CWP_SKIPDISABLED|CWP_SKIPTRANSPARENT) == hwnd)
 			return hwnd;
@@ -238,7 +241,7 @@ static int PrepareMyRegKey_(wchar_t key[80], const wchar_t* section) {
 	
 	if(m_regkey_size+section_len > 80){
 		#ifdef _DEBUG
-		MessageBoxA(NULL, "settings key too huge", "PrepareMyRegKey", 0);
+		MessageBoxA(NULL, "settings key too huge", "PrepareMyRegKey", MB_SETFOREGROUND);
 		#endif
 		return 0;
 	}

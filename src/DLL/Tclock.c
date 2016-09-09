@@ -12,7 +12,7 @@ void CALLBACK OnDrawTimer(HWND hwnd, unsigned uMsg, uintptr_t idEvent, unsigned 
 void ReadStyleData(HWND hwnd, int preview);
 void ReadFormatData(HWND hwnd, int preview);
 void InitClock(HWND hwnd);
-void EndClock(HWND hwnd);
+void EndClock();
 int DestroyClock();
 int UpdateClock(HWND hwnd, HFONT fnt);
 int UpdateClockSize();
@@ -514,13 +514,15 @@ int SetupClockAPI(int version, TClockAPI* api); // clock_api.c
 void InitClock(HWND hwnd)   //--------------------------------------------------------------+++-->
 {
 	gs_hwndClock = hwnd;
+	gs_tray = GetParent(hwnd);
+	gs_taskbar = GetParent(gs_tray);
 	LoadLibrary(L"T-Clock" ARCH_SUFFIX); // self-reference
 	SetupClockAPI(CLOCK_API, NULL); // initialize API
 	GetClientRect(hwnd, &m_rcClock); // use original clock size until we've loaded our settings
 	m_clock_base_width = m_rcClock.right;
 	m_clock_base_height = m_rcClock.bottom;
 	{//"top" margin detection // 2px Win8 default (Vista+)
-		RECT rcBar; GetClientRect(GetParent(GetParent(hwnd)),&rcBar);
+		RECT rcBar; GetClientRect(gs_taskbar,&rcBar);
 		if(rcBar.right>rcBar.bottom){//horizontal
 			m_BORDER_MARGIN = rcBar.bottom-m_rcClock.bottom;
 		}else{//vertical
@@ -528,7 +530,7 @@ void InitClock(HWND hwnd)   //--------------------------------------------------
 		}
 	}
 	// Win 10 1st-anniversary update requires us to hook the tray
-	SetWindowSubclass(GetParent(hwnd), Window_ClockTray_Hooked, 0, 0);
+	SetWindowSubclass(gs_tray, Window_ClockTray_Hooked, 0, 0);
 	SetWindowSubclass(hwnd, Window_Clock_Hooked, 0, 0);
 	
 	CreateTip(hwnd); // Create Mouse-Over ToolTip Window & Contents
@@ -544,22 +546,22 @@ void InitClock(HWND hwnd)   //--------------------------------------------------
 
 extern HANDLE g_exit_lock; // main.c
 EXTERN_C IMAGE_DOS_HEADER __ImageBase; ///< own dll handle
-static void SelfDestruct(void* hwnd)
+static void SelfDestruct(void* user)
 { // never crashed without this SelfDestruct stub, but better safe then sorry :P Crashing the explorer isn't that nice.
-	HWND taskbar = GetParent(GetParent(hwnd));
+	(void)user;
 	// make sure we're out of our hooked message loop
-	SendMessage(GetParent(hwnd), WM_NULL, 0, 0);
-	InvalidateRect(hwnd, NULL, TRUE);
-	SendMessage(hwnd, WM_NULL, 0, 0);
+	SendMessage(gs_tray, WM_NULL, 0, 0);
+	InvalidateRect(gs_hwndClock, NULL, TRUE);
+	SendMessage(gs_hwndClock, WM_NULL, 0, 0);
 	// refresh primary taskbar
-	InvalidateRect(taskbar, NULL, TRUE);
-	SendMessage(taskbar, WM_SIZE, SIZE_RESTORED, 0);
+	InvalidateRect(gs_taskbar, NULL, TRUE);
+	SendMessage(gs_taskbar, WM_SIZE, SIZE_RESTORED, 0);
 	// we could use FreeLibraryAndExitThread on XP+, but this "hack" should be ok for now.
 	CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)FreeLibrary, &__ImageBase, 0, NULL); // die painfully
 }
 //==============================================================================
 //---+++--> End Clock Procedure (Window_Clock_Hooked) - (Before?) Removing Hook:
-void EndClock(HWND hwnd)   //---------------------------------------------+++-->
+void EndClock()   //------------------------------------------------------+++-->
 {
 	g_exit_lock = CreateSemaphore(NULL, 1, 1, kConfigName+1); // SendMessage() "fix"
 	WaitForSingleObject(g_exit_lock, 0);
@@ -568,21 +570,21 @@ void EndClock(HWND hwnd)   //---------------------------------------------+++-->
 		UnregisterClass(MAKEINTATOM(m_multiClockClass), 0);
 		m_multiClockClass = 0;
 	}
-	RevokeDragDrop(hwnd); // frees m_droptarget
+	RevokeDragDrop(gs_hwndClock); // frees m_droptarget
 	MyDragDrop_DeInit();
 	DestroyTip();
 	
-	KillTimer(hwnd, TCLOCK_TIMER_ID);
-	RemoveWindowSubclass(GetParent(hwnd), Window_ClockTray_Hooked, 0);
-	RemoveWindowSubclass(hwnd, Window_Clock_Hooked, 0);
+	KillTimer(gs_hwndClock, TCLOCK_TIMER_ID);
+	RemoveWindowSubclass(gs_tray, Window_ClockTray_Hooked, 0);
+	RemoveWindowSubclass(gs_hwndClock, Window_Clock_Hooked, 0);
 	// Windows uses timer ID 0 for every-minute drawing
 	// make sure it is set (again)
-	SetTimer(hwnd, WIN_CLOCK_TIMER_ID, 10*1000, NULL);
+	SetTimer(gs_hwndClock, WIN_CLOCK_TIMER_ID, 10*1000, NULL);
 	
 	DestroyClock();
-	EndNewAPI(hwnd);
+	EndNewAPI(gs_hwndClock);
 	
-	_beginthread(SelfDestruct, 0, hwnd);
+	_beginthread(SelfDestruct, 0, NULL);
 }
 static LRESULT CALLBACK Window_ClockTooltip_Hooked(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam, UINT_PTR uIdSubclass, DWORD_PTR dwRefData) {
 	(void)dwRefData;
@@ -656,7 +658,7 @@ static LRESULT CALLBACK Window_Clock_Hooked(HWND hwnd, UINT message, WPARAM wPar
 	(void)dwRefData;
 	switch(message){
 	case WM_DESTROY:
-		RemoveWindowSubclass(GetParent(hwnd), Window_ClockTray_Hooked, 0);
+		RemoveWindowSubclass(gs_tray, Window_ClockTray_Hooked, 0);
 		RemoveWindowSubclass(hwnd, Window_Clock_Hooked, uIdSubclass);
 		DestroyClock();
 		break;
@@ -714,8 +716,7 @@ static LRESULT CALLBACK Window_Clock_Hooked(HWND hwnd, UINT message, WPARAM wPar
 			if(hwnd != m_clock_active)
 				return SendMessage(m_clock_active, message, wParam, lParam);
 			DefSubclassProc(hwnd, WM_LBUTTONDOWN, MK_LBUTTON, MAKELPARAM(4,4));
-			Sleep(0);
-			DefSubclassProc(hwnd, WM_LBUTTONUP, 0, MAKELPARAM(4,4));
+			SetTimer(hwnd, TCLOCK_TIMER_ID_CLICK, 25, NULL);
 			return 0;
 		}
 		break;}
@@ -731,6 +732,11 @@ static LRESULT CALLBACK Window_Clock_Hooked(HWND hwnd, UINT message, WPARAM wPar
 //		InvalidateRect(hwnd,NULL,0); /// uncomment for debugging purpose, eg. does our drawing flicker
 		return 0;}
 	case WM_TIMER: // Windows uses timer ID 0 to update every minute (tries to stay ~1 sec. close to full minute)
+		if(wParam == TCLOCK_TIMER_ID_CLICK) {
+			KillTimer(hwnd, wParam);
+			DefSubclassProc(hwnd, WM_LBUTTONUP, 0, MAKELPARAM(4,4));
+			return 0;
+		}
 		if(m_bNoClock) break;
 		return 0;
 	/* start of shared code used by multi-clock winproc
@@ -775,6 +781,7 @@ static LRESULT CALLBACK Window_Clock_Hooked(HWND hwnd, UINT message, WPARAM wPar
 			m_col = m_col_hover;
 			FillClockBGHover();
 			InvalidateRect(gs_hwndClock, NULL, 0);
+			SendMessage((wParam & WPARAM_SUBCLOCK ? GetParent(hwnd) : gs_taskbar), WM_NCHITTEST, 0, GetMessagePos());
 		}
 		return 0;
 	case WM_MOUSEHOVER:
@@ -826,7 +833,7 @@ static LRESULT CALLBACK Window_Clock_Hooked(HWND hwnd, UINT message, WPARAM wPar
 	case WM_COMMAND:
 		switch(LOWORD(wParam)) {
 		case IDM_EXIT:
-			EndClock(hwnd);
+			EndClock();
 			break;
 		case IDM_SHUTDOWN: {// unload 'exchndl' if loaded
 			HMODULE exchndl = GetModuleHandleA("exchndl");
@@ -860,12 +867,11 @@ static LRESULT CALLBACK Window_Clock_Hooked(HWND hwnd, UINT message, WPARAM wPar
 			ReadFormatData(hwnd,1); // also creates/updates clock because of preview
 		/* fall through */
 	case CLOCKM_REFRESHTASKBAR:{ // refresh other elements than clock (somehow required to actually change the clock's size)
-		HWND taskbar=GetParent(GetParent(hwnd));
 		int alpha = api.GetIntEx((wParam ? L"Preview" : L"Taskbar"), L"AlphaTaskbar", 0);
 		int clear_taskbar = api.GetIntEx(L"Taskbar", L"ClearTaskbar", 0);
 		SetLayeredTaskbar(hwnd, alpha, clear_taskbar);
-		PostMessage(taskbar, WM_SIZE, SIZE_RESTORED, 0);
-		InvalidateRect(taskbar, NULL, 1);
+		PostMessage(gs_taskbar, WM_SIZE, SIZE_RESTORED, 0);
+		InvalidateRect(gs_taskbar, NULL, 1);
 		return 0;}
 	case CLOCKM_BLINK: // blink the clock
 		if(wParam)
@@ -924,7 +930,12 @@ static LRESULT CALLBACK Window_SecondaryClock_Hooked(HWND hwnd, UINT message, WP
 	case WM_USER+102: // emulated click for Win10.1 to open calendar
 		if(dwRefData) {
 			DefSubclassProc(hwnd, WM_LBUTTONDOWN, MK_LBUTTON, MAKELPARAM(4,4));
-			Sleep(0);
+			SetTimer(hwnd, TCLOCK_TIMER_ID_CLICK, 25, NULL);
+		}
+		return 0;
+	case WM_TIMER:
+		if(wParam == TCLOCK_TIMER_ID_CLICK) {
+			KillTimer(hwnd, wParam);
 			DefSubclassProc(hwnd, WM_LBUTTONUP, 0, MAKELPARAM(4,4));
 		}
 		return 0;
@@ -1011,7 +1022,7 @@ void ReadFormatData(HWND hwnd, int preview)   //---------------------+++-->
 	DWORD dwInfoFormat;
 	m_bNoClock = (char)api.GetInt(section, L"NoClockCustomize", 0);
 	// read format
-	if(!api.GetStr(section,L"Format",m_format,_countof(m_format),L"") || !m_format[0]) {
+	if(!api.GetStr(section,L"Format",m_format,_countof(m_format),L"\"config error\"") || !m_format[0]) {
 		m_bNoClock = 1;
 	}
 	g_bHourZero = (char)api.GetInt(section, L"HourZero", 0);
@@ -1026,7 +1037,7 @@ void ReadFormatData(HWND hwnd, int preview)   //---------------------+++-->
 	if(preview){
 		UpdateClock(hwnd,NULL);
 		InvalidateRect(hwnd, NULL, 0);
-		InvalidateRect(GetParent(hwnd), NULL, 1);
+		InvalidateRect(gs_tray, NULL, 1);
 	}
 }
 //=========================================================================
@@ -1070,7 +1081,7 @@ void ReadStyleData(HWND hwnd, int preview)   //---------------------+++-->
 	/// create/update clock
 	UpdateClock(hwnd, hFon);
 	InvalidateRect(hwnd, NULL, 0);
-	InvalidateRect(GetParent(hwnd), NULL, 1);
+	InvalidateRect(gs_tray, NULL, 1);
 }
 
 /*------------------------------------------------
@@ -1183,7 +1194,7 @@ void CalculateClockTextPosition(){
 	int textwidth=(int)(sin_*(m_textheight+m_leading));
 	int textheight=(int)(cos_*(m_textheight+m_leading));
 	/// use width / height based on angle.
-	GetClientRect(GetParent(GetParent(gs_hwndClock)),&m_rcClock);
+	GetClientRect(gs_taskbar, &m_rcClock);
 	m_bHorizontalTaskbar=m_rcClock.right>m_rcClock.bottom;
 	if(m_bHorizontalTaskbar){
 		m_rcClock.bottom-=m_BORDER_MARGIN;//2px top

@@ -20,6 +20,7 @@ void OnContextMenu(HWND hWnd, int xPos, int yPos)
 	HMENU hPopupMenu;
 	HMENU hMenu;
 	int item;
+	HBITMAP shield_bmp = NULL;
 	
 	g_bQMAudio   = api.GetInt(L"QuickyMenu", L"AudioProperties",   TRUE);
 	g_bQMNet     = api.GetInt(L"QuickyMenu", L"NetworkDrives",     TRUE);
@@ -66,6 +67,13 @@ void OnContextMenu(HWND hWnd, int xPos, int yPos)
 				InsertMenuItem(hPopupMenu, IDM_SHOWCALENDER, FALSE, &mii);
 			}
 		}
+	
+		if(!HaveSetTimePermissions()) {
+			HICON shield = GetStockIcon(SIID_SHIELD, SHGSI_SMALLICON);
+			shield_bmp = GetBitmapFromIcon(shield, -2);
+			DestroyIcon(shield);
+			SetMenuItemBitmaps(hPopupMenu, IDM_SNTP_SYNC, MF_BYCOMMAND, shield_bmp, NULL);
+		}
 	}
 	
 	/// http://support.microsoft.com/kb/135788
@@ -95,6 +103,8 @@ void OnContextMenu(HWND hWnd, int xPos, int yPos)
 	}
 	PostMessage(hWnd, WM_NULL, 0, 0);
 	DestroyMenu(hMenu); // Starting Over is Simpler & Recommended
+	if(shield_bmp)
+		DeleteBitmap(shield_bmp);
 }
 //================================================================================================
 //--------------------------------------+++--> Show/Hide Desktop (e.g. Show/Hide all Open Windows):
@@ -128,10 +138,6 @@ LRESULT OnTClockCommand(HWND hwnd, WPARAM wParam)   //--------------------------
 		break;
 	case IDM_PROP_ALARM:
 		MyPropertySheet(1);
-		break;
-		
-	case IDM_SYNCTIME:
-		SyncTimeNow();
 		break;
 		
 	case IDM_EXIT:
@@ -198,17 +204,17 @@ LRESULT OnTClockCommand(HWND hwnd, WPARAM wParam)   //--------------------------
 		
 	case IDM_SHUTDOWN:
 		if(!ShutDown())
-			MessageBox(0, L"Shutdown Request Failed!", L"ERROR", MB_OK|MB_ICONERROR);
+			MessageBox(0, L"Shutdown Request Failed!", L"ERROR", MB_OK|MB_ICONERROR|MB_SETFOREGROUND);
 		break;
 		
 	case IDM_REBOOT:
 		if(!ReBoot())
-			MessageBox(0, L"Reboot Request Failed!", L"ERROR", MB_OK|MB_ICONERROR);
+			MessageBox(0, L"Reboot Request Failed!", L"ERROR", MB_OK|MB_ICONERROR|MB_SETFOREGROUND);
 		break;
 		
 	case IDM_LOGOFF:
 		if(!LogOff())
-			MessageBox(0, L"Logoff Request Failed!", L"ERROR", MB_OK|MB_ICONERROR);
+			MessageBox(0, L"Logoff Request Failed!", L"ERROR", MB_OK|MB_ICONERROR|MB_SETFOREGROUND);
 		break;
 		
 	case IDM_FWD_CASCADE: case IDM_FWD_SIDEBYSIDE: case IDM_FWD_STACKED: case IDM_FWD_SHOWDESKTOP: case IDM_FWD_MINALL: case IDM_FWD_UNDO:
@@ -273,32 +279,32 @@ LRESULT OnTClockCommand(HWND hwnd, WPARAM wParam)   //--------------------------
 		WatchTimer(1); // Shelter All the Homeless Timers.
 		break;
 	case IDM_SNTP:{
-		WORD action = HIWORD(wParam);
-		switch(action){
-		case 0:
+		short just_elevated = HIWORD(wParam);
+		if(!just_elevated || HaveSetTimePermissions()) {
+			ReplyMessage(1);
 			NetTimeConfigDialog(0);
-			break;
-		case 1:
-			if(HaveSetTimePermissions()){
-				NetTimeConfigDialog(0);
-				return 1;
-			} else {
-				if(IsWindow(g_hDlgSNTP))
-					SendMessage(g_hDlgSNTP, WM_CLOSE, 1, 0); // close window but safe changes
-			}
-			return 0;
+			return 1; // handled
+		} else {
+			if(IsWindow(g_hDlgSNTP))
+				SendMessage(g_hDlgSNTP, WM_CLOSE, 1, 0); // close window but safe changes
 		}
-		break;}
+		return 0;}
+	case IDM_SYNCTIME:
 	case IDM_SNTP_SYNC:{
-		WORD justElevated = HIWORD(wParam);
-		if(HaveSetTimePermissions()){
-			SyncTimeNow();
-		} else if(!justElevated){
-			if(api.ExecElevated(GetClockExe(),L"/UAC /Sync",NULL) != 0){
-				MessageBox(0, L"T-Clock must be elevated to set your system time,\nbut elevation was canceled", L"Time Sync Failed", MB_OK|MB_ICONERROR);
+		short just_elevated = HIWORD(wParam);
+		int can_sync = HaveSetTimePermissions();
+		if(!just_elevated || can_sync) {
+			ReplyMessage(1);
+			if(can_sync) {
+				SyncTimeNow();
+			} else {
+				if(api.ExecElevated(GetClockExe(),L"/UAC /Sync",NULL) != 0) {
+					MessageBox(0, L"T-Clock must be elevated to set your system time,\nbut elevation was canceled", L"Time Sync Failed", MB_OK|MB_ICONERROR|MB_SETFOREGROUND);
+				}
 			}
+			return 1; // handled
 		}
-		break;}
+		return 0;}
 	default:
 		#ifdef _DEBUG
 		DBGOUT("%s: unknown ID: %.5i(0x%.4x) (hwnd:%p)", __FUNCTION__, wID, wID, hwnd);

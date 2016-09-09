@@ -191,18 +191,14 @@ int CreateLink(wchar_t* fname, wchar_t* dstpath, wchar_t* name)
 	HRESULT hres;
 	IShellLink* psl;
 	
-	CoInitializeEx(NULL,COINIT_APARTMENTTHREADED);
+	CoInitializeEx(NULL, COINIT_APARTMENTTHREADED);
 	
 	hres = CoCreateInstance(&CLSID_ShellLink, NULL, CLSCTX_INPROC_SERVER, &IID_IShellLink, (void**)&psl);
 	if(SUCCEEDED(hres)) {
 		IPersistFile* ppf;
-		wchar_t path[MAX_PATH];
 		
 		psl->lpVtbl->SetPath(psl, fname);
 		psl->lpVtbl->SetDescription(psl, name);
-		wcsncpy_s(path,MAX_PATH,fname,_TRUNCATE);
-		del_title(path);
-		psl->lpVtbl->SetWorkingDirectory(psl, path);
 		
 		hres = psl->lpVtbl->QueryInterface(psl, &IID_IPersistFile, (void**)&ppf);
 		if(SUCCEEDED(hres)) {
@@ -218,9 +214,7 @@ int CreateLink(wchar_t* fname, wchar_t* dstpath, wchar_t* name)
 	}
 	CoUninitialize();
 	
-	if(SUCCEEDED(hres))
-		return 1;
-	return 0;
+	return SUCCEEDED(hres);
 }
 
 void TranslateDispatchTClockMessage(MSG* msg) {
@@ -247,21 +241,24 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, wchar_t* lpCmd
 	(void)nShowCmd;
 	
 	g_instance = hInstance;
-	if(LoadClockAPI(L"misc/T-Clock" ARCH_SUFFIX, &api)){
-		MessageBox(NULL, L"Error loading: T-Clock" ARCH_SUFFIX L".dll", L"API error", MB_OK|MB_ICONERROR);
+	updated = LoadClockAPI(L"misc/T-Clock" ARCH_SUFFIX, &api);
+	if(updated) {
+		wchar_t title[16];
+		swprintf(title, _countof(title), FMT("API error (%i)"), updated);
+		MessageBox(NULL, L"Error loading: T-Clock" ARCH_SUFFIX L".dll", title, (MB_OK | MB_ICONERROR | MB_SETFOREGROUND));
 		return 2;
 	}
 	_wchdir(api.root); // make sure we've got the right working directory
 	
 	// Make sure we're running Windows 2000 and above
 	if(!api.OS) {
-		MessageBox(NULL, L"T-Clock requires Windows 2000 or newer", L"old OS", MB_OK|MB_ICONERROR);
+		MessageBox(NULL, L"T-Clock requires Windows 2000 or newer", L"old OS", MB_OK|MB_ICONERROR|MB_SETFOREGROUND);
 		return 1;
 	}
 	
 	// make sure ObjectBar isn't running -> From Original Code/Unclear if This is Still a Conflict. (test suggested not really.. no crash but no clock either :P)
 	if(FindWindowA("ObjectBar Main","ObjectBar")) {
-		MessageBox(NULL, L"ObjectBar and T-Clock can't be run together", L"ObjectBar detected!" ,MB_OK|MB_ICONERROR);
+		MessageBox(NULL, L"ObjectBar and T-Clock can't be run together", L"ObjectBar detected!" ,MB_OK|MB_ICONERROR|MB_SETFOREGROUND);
 		return 1;
 	}
 	
@@ -332,9 +329,6 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, wchar_t* lpCmd
 	g_atomTClock = RegisterClass(&wndclass);
 	
 	if(api.OS >= TOS_VISTA) { // allow non elevated processes to send control messages (eg, App with admin rights, explorer without)
-		#define MSGFLT_ADD 1
-		#define MSGFLT_REMOVE 2
-		typedef BOOL (WINAPI* ChangeWindowMessageFilter_t)(UINT message,DWORD dwFlag);
 		ChangeWindowMessageFilter_t ChangeWindowMessageFilter = (ChangeWindowMessageFilter_t)GetProcAddress(GetModuleHandleA("user32"), "ChangeWindowMessageFilter");
 		if(ChangeWindowMessageFilter){
 			int msgid;
@@ -402,9 +396,10 @@ LRESULT CALLBACK Window_TClockDummy(HWND hwnd, UINT message, WPARAM wParam, LPAR
 //---------------------------------------------//---------------+++--> T-Clock Command Line Option:
 void ProcessCommandLine(HWND hwndMain,const wchar_t* cmdline)   //-----------------------------+++-->
 {
-	int justElevated = 0;
+	int just_elevated = 0;
 	const wchar_t* p = cmdline;
-	if(g_hwndTClockMain != hwndMain){
+	if(!g_hwndTClockMain){
+		AllowSetForegroundWindow(ASFW_ANY);
 		g_hwndTClockMain = CreateWindow(L"STATIC", NULL, 0, 0,0,0,0, HWND_MESSAGE_nowarn, 0, 0, 0);
 		SubclassWindow(g_hwndTClockMain, Window_TClockDummy);
 	}
@@ -437,19 +432,16 @@ void ProcessCommandLine(HWND hwndMain,const wchar_t* cmdline)   //--------------
 				SendMessage(hwndMain, WM_COMMAND, IDM_STOPWATCH_LAP, 0);
 				p += 3;
 			} else if(wcsncasecmp(p, L"SyncOpt", 7) == 0) {
-				if(HaveSetTimePermissions()){
-					if(!SendMessage(hwndMain, WM_COMMAND, MAKEWPARAM(IDM_SNTP,1), 0)){
-						NetTimeConfigDialog(justElevated);
-					}
-				}else{
-					SendMessage(hwndMain, WM_COMMAND, IDM_SNTP, 0);
+				if(!SendMessage(hwndMain, WM_COMMAND, MAKEWPARAM(IDM_SNTP,just_elevated), 0)) {
+					NetTimeConfigDialog(just_elevated);
 				}
 				p += 7;
 			} else if(wcsncasecmp(p, L"Sync", 4) == 0) {
 				p += 4;
-				SendMessage(hwndMain, WM_COMMAND, MAKEWPARAM(IDM_SNTP_SYNC,justElevated), 0);
-				if(g_hwndTClockMain == hwndMain)
-					SendMessage(hwndMain, MAINM_EXIT, 0, 0);
+				if(!SendMessage(hwndMain, WM_COMMAND, MAKEWPARAM(IDM_SNTP_SYNC,just_elevated), 0)) {
+					SyncTimeNow();
+				}
+				SendMessage(g_hwndTClockMain, MAINM_EXIT, 0, 0);
 			} else if(wcsncmp(p, L"Wc", 2) == 0) { // Win10 calendar "restore"
 				if(p[2] == '1') // restore to previous
 					api.SetSystemInt(HKEY_LOCAL_MACHINE, kSectionImmersiveShell, kKeyWin32Tray, 1);
@@ -457,7 +449,7 @@ void ProcessCommandLine(HWND hwndMain,const wchar_t* cmdline)   //--------------
 					api.DelSystemValue(HKEY_LOCAL_MACHINE, kSectionImmersiveShell, kKeyWin32Tray);
 				p += 2;
 			} else if(wcsncmp(p, L"UAC", 3) == 0) {
-				justElevated = 1;
+				just_elevated = 1;
 				p += 3;
 			} else if(wcsncmp(p, L"SEH", 3) == 0) {
 				p += 3;
@@ -509,7 +501,7 @@ static void InjectClockHook(HWND hwnd) {
 					L"It's possible that T-Clock is crashing your Explorer,\n"
 					L"automated hooking postponed.\n"
 					L"\n"
-					L"Take precaution and exit T-Clock now?", L"T-Clock",MB_YESNO,MB_ICONEXCLAMATION) == IDYES) {
+					L"Take precaution and exit T-Clock now?", L"T-Clock", MB_YESNO|MB_SETFOREGROUND, MB_ICONEXCLAMATION) == IDYES) {
 				SendMessage(hwnd, WM_CLOSE, 0, 0);
 				return;
 			}
@@ -566,39 +558,8 @@ LRESULT CALLBACK Window_TClock(HWND hwnd,	UINT message, WPARAM wParam, LPARAM lP
 //			hdc = BeginPaint(hwnd, &ps);
 //			EndPaint(hwnd, &ps);
 			return 0;}
-	case WM_HOTKEY: // Feature Requested From eweoma at DonationCoder.com
-		switch(wParam) { // And a Damn Fine Request it Was... :-)
-		case HK_TIMER_ADD:
-			PostMessage(hwnd, WM_COMMAND, IDM_TIMER, 0);
-			return 0;
-			
-		case HK_TIMER_WATCH:
-			PostMessage(hwnd, WM_COMMAND, IDM_TIMEWATCH, 0);
-			return 0;
-			
-		case HK_STOPWATCH:
-			PostMessage(hwnd, WM_COMMAND, IDM_STOPWATCH, 0);
-			return 0;
-			
-		case HK_SETTINGS:
-			PostMessage(hwnd, WM_COMMAND, IDM_SHOWPROP, 0);
-			return 0;
-			
-		case HK_CALENDAR:
-			PostMessage(hwnd, WM_COMMAND, IDM_SHOWCALENDER, 0);
-			return 0;
-			
-		case HK_SNTP:
-			if(HaveSetTimePermissions()) {
-				SyncTimeNow();
-			} else {
-//				api.ExecElevated(GetClockExe(), "/UAC /Sync", NULL);
-				PostMessage(hwnd, WM_COMMAND, IDM_SNTP, 0);
-			}
-			return 0;
-			
-		} return 0;
-		
+	case WM_HOTKEY:
+		return HotkeyMessage(hwnd, wParam, lParam);
 		//==================================================
 	case MAINM_CLOCKINIT: // Messages sent/posted from TCDLL.dll
 		g_hwndClock = (HWND)lParam;
@@ -680,7 +641,7 @@ void InitError(int n)
 	wchar_t msg[160];
 	
 	wsprintf(msg, FMT("%s: %d"), MyString(IDS_NOTFOUNDCLOCK), n);
-	api.Message(NULL, msg, L"Error", MB_OK, MB_ICONEXCLAMATION);
+	api.Message(NULL, msg, L"Error", MB_OK|MB_SETFOREGROUND, MB_ICONEXCLAMATION);
 }
 /*---------------------------------------------------------
 ---- Main Timer -------------------------------------------

@@ -62,8 +62,11 @@
 			<Add library="advapi32" />
 			<Add library="shell32" />
 			<Add library="user32" />
+			<Add library="gdi32" />
 			<Add library="psapi" />
+			<Add library="comdlg32" />
 			<Add library="comctl32" />
+			<Add library="msimg32" />
 		</Linker>
 		<ExtraCommands>
 			<Add before="../common/AutoVersion --git . ../common/version.h" />
@@ -79,6 +82,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="../common/clock.h" />
+		<Unit filename="../common/control_extensions.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../common/control_extensions.h" />
 		<Unit filename="../common/globals.h" />
 		<Unit filename="../common/manifest.xml" />
 		<Unit filename="../common/newapi.c">
