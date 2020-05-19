@@ -1,6 +1,7 @@
+﻿#include <windows.h>
 #ifndef CONTROL_EXTENSIONS_H_
 #define CONTROL_EXTENSIONS_H_
-#include <windows.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif

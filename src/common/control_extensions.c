@@ -1,4 +1,4 @@
-#include "../common/globals.h"
+﻿#include "../common/globals.h"
 #include <commctrl.h>
 #include "control_extensions.h"
 

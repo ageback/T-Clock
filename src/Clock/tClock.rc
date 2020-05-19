@@ -27,7 +27,7 @@
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 #ifdef _WIN32
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
-#pragma code_page(1252)
+#pragma code_page(936)
 #endif //_WIN32
 
 /////////////////////////////////////////////////////////////////////////////
@@ -39,77 +39,77 @@ IDR_MENU MENUEX
 BEGIN
     POPUP "",0,0,0
     BEGIN
-        MENUITEM "&Adjust date/time",               IDM_FWD_DATETIME,0,0
+        MENUITEM "调整日期/时间(&A)",               IDM_FWD_DATETIME,0,0
 //        MENUITEM "&Adjust date/time ex",               IDM_DATETIME_EX,0,0
-        MENUITEM "&Customize notification icons",   IDM_FWD_CUSTOMNOTIFYICONS,0,0
+        MENUITEM "自定义通知图标(&C)",   IDM_FWD_CUSTOMNOTIFYICONS,0,0
         MENUITEM "",0,MFT_SEPARATOR,0
-        MENUITEM "Casca&de windows",                IDM_FWD_CASCADE,0,0
-        MENUITEM "Show windows stack&ed",           IDM_FWD_STACKED,0,0
-        MENUITEM "Show windows s&ide by side",      IDM_FWD_SIDEBYSIDE,0,0
-        MENUITEM "Toggle desktop",                  IDM_TOGGLE_DT,0,0
+        MENUITEM "层叠窗口(&D)",                IDM_FWD_CASCADE,0,0
+        MENUITEM "堆叠显示窗口(&E)",           IDM_FWD_STACKED,0,0
+        MENUITEM "并排显示窗口(&I)",      IDM_FWD_SIDEBYSIDE,0,0
+        MENUITEM "切换桌面",                  IDM_TOGGLE_DT,0,0
 //        MENUITEM "&Show the desktop",               IDM_FWD_SHOWDESKTOP,0,0
-        MENUITEM "Minimize all windows",            IDM_FWD_MINALL,0,0
-        MENUITEM "&Undo last window change",        IDM_FWD_UNDO,0,0
+        MENUITEM "最小化所有窗口",            IDM_FWD_MINALL,0,0
+        MENUITEM "撤消上次窗口更改(&U)",        IDM_FWD_UNDO,0,0
         MENUITEM "",0,MFT_SEPARATOR,0
-        MENUITEM "&Task Manager",                   IDM_FWD_TASKMAN,0,0
+        MENUITEM "任务管理器(&T)",                   IDM_FWD_TASKMAN,0,0
 //        MENUITEM "",0,MFT_SEPARATOR,0
 //        MENUITEM "&Lock the taskbar",               IDM_FWD_LOCKTASKBAR,0,0
 //        MENUITEM "&Lock all taskbars",              IDM_FWD_LOCKALLTASKBAR,0,0
 //        MENUITEM "Taskbar P&roperties",             IDM_FWD_TASKBARPROP,0,0
         MENUITEM "",0,MFT_SEPARATOR,0
-        POPUP "Sounds && Audio Options",IDC_SOUNDAUDIO,0,0
+        POPUP "声音和音频选项",IDC_SOUNDAUDIO,0,0
         BEGIN
-            MENUITEM "Open Volume Controls",        IDM_VOLUMECONTROL,0,0
-            MENUITEM "Audio devices",               IDM_AUDIOPROP,0,0
+            MENUITEM "打开音量控制",        IDM_VOLUMECONTROL,0,0
+            MENUITEM "音频设备",               IDM_AUDIOPROP,0,0
         END
-        POPUP "Network Drive(s)",IDC_NETWORK,0,0
+        POPUP "网络驱动器",IDC_NETWORK,0,0
         BEGIN
-            MENUITEM "Map Network Drive",           IDM_MAPDRIVE,0,0
-            MENUITEM "Disconnect Network Drive",    IDM_DISCONNECT,0,0
+            MENUITEM "映射网络驱动器",           IDM_MAPDRIVE,0,0
+            MENUITEM "断开",    IDM_DISCONNECT,0,0
         END
         POPUP "T-Clock Quickys",IDC_QUICKYS,0,0
         BEGIN
-            MENUITEM "Windows Explorer",            IDM_QUICKY_WINEXP,0,0
-            MENUITEM "Command Prompt",              IDM_QUICKY_DOS,0,0
+            MENUITEM "Windows 资源管理器",            IDM_QUICKY_WINEXP,0,0
+            MENUITEM "命令提示符",              IDM_QUICKY_DOS,0,0
             MENUITEM "",0,MFT_SEPARATOR,0
-            MENUITEM "T-Clock Calendar",            IDM_SHOWCALENDER,0,0
-            MENUITEM "Time Sync (SNTP) options",    IDM_SNTP,0,0
-            MENUITEM "Synchronize time",            IDM_SNTP_SYNC,0,0
+            MENUITEM "T-Clock 日历",            IDM_SHOWCALENDER,0,0
+            MENUITEM "时间同步(SNTP)选项",    IDM_SNTP,0,0
+            MENUITEM "同步时间",            IDM_SNTP_SYNC,0,0
             MENUITEM "",0,MFT_SEPARATOR,0
-            MENUITEM "Empty Recycle Bin",           IDM_QUICKY_EMPTYRB,0,0
+            MENUITEM "清空回收站",           IDM_QUICKY_EMPTYRB,0,0
         END
-        POPUP "T-Clock Alarms",IDC_ALARMS,0,0
+        POPUP "T-Clock 闹钟",IDC_ALARMS,0,0
         BEGIN
-            MENUITEM "Hourly Chime",                IDM_CHIME,0,MFS_DISABLED
-            MENUITEM "Add/Edit Alarm",              IDM_PROP_ALARM,0,0
+            MENUITEM "整点报时",                IDM_CHIME,0,MFS_DISABLED
+            MENUITEM "添加/编辑闹钟",              IDM_PROP_ALARM,0,0
         END
-        POPUP "T-Clock Timers",IDC_TIMERS,0,0
+        POPUP "T-Clock 定时器",IDC_TIMERS,0,0
         BEGIN
-            MENUITEM "Stopwatch",                   IDM_STOPWATCH,0,0
-            MENUITEM "Watch List\t(running timers)", IDM_TIMEWATCH,0,0
-            MENUITEM "Reset Watch List",            IDM_TIMEWATCHRESET,0,MFS_DISABLED
-            MENUITEM "Add/Edit Timers",              IDM_TIMER,0,0
+            MENUITEM "秒表",                   IDM_STOPWATCH,0,0
+            MENUITEM "监视列表\t(正在运行的定时器)", IDM_TIMEWATCH,0,0
+            MENUITEM "重置监视列表",            IDM_TIMEWATCHRESET,0,MFS_DISABLED
+            MENUITEM "添加/编辑定时器",              IDM_TIMER,0,0
         END
-        MENUITEM "Display Properties",              IDM_DISPLAYPROP,0,0
+        MENUITEM "显示属性",              IDM_DISPLAYPROP,0,0
         MENUITEM "",0,MFT_SEPARATOR,0
-        MENUITEM "T-Clock Options",                 IDM_SHOWPROP,0,0
-        MENUITEM "Refresh T-Clock",                 IDM_REFRESHTCLOCK,0,0
+        MENUITEM "T-Clock 选项",                 IDM_SHOWPROP,0,0
+        MENUITEM "刷新 T-Clock",                 IDM_REFRESHTCLOCK,0,0
         MENUITEM "",0,MFT_SEPARATOR,0
-        POPUP "Exit Windows",IDC_EXITWIN,0,0
+        POPUP "退出 Windows",IDC_EXITWIN,0,0
         BEGIN
-            MENUITEM "Lock",                        IDM_LOCK,0,0
-            MENUITEM "Log off",                     IDM_LOGOFF,0,0
+            MENUITEM "锁定",                        IDM_LOCK,0,0
+            MENUITEM "注销",                     IDM_LOGOFF,0,0
             MENUITEM "",0,MFT_SEPARATOR,0
-            MENUITEM "Sleep",                       IDM_SLEEP,0,0
-            MENUITEM "Hibernate",                   IDM_HIBERNATE,0,0
-            MENUITEM "Reboot",                      IDM_REBOOT,0,0
-            MENUITEM "Shut Down",                   IDM_SHUTDOWN,0,0
+            MENUITEM "睡眠",                       IDM_SLEEP,0,0
+            MENUITEM "休眠",                   IDM_HIBERNATE,0,0
+            MENUITEM "重启",                      IDM_REBOOT,0,0
+            MENUITEM "关机",                   IDM_SHUTDOWN,0,0
         END
-        MENUITEM "Exit T-Clock",                    IDM_EXIT,0,0
+        MENUITEM "退出 T-Clock",                    IDM_EXIT,0,0
         MENUITEM "",IDS_NONE,MFT_SEPARATOR,0
-        MENUITEM "&Run...",                         IDM_FWD_RUNAPP,0,0
-        MENUITEM "Re&start Explorer",               IDM_RESTART_EXPLORER,0,0
-        MENUITEM "E&xit Explorer",                  IDM_EXIT_EXPLORER,0,0
+        MENUITEM "运行(&R)...",                         IDM_FWD_RUNAPP,0,0
+        MENUITEM "重启资源管理器(&S)",               IDM_RESTART_EXPLORER,0,0
+        MENUITEM "退出资源管理器(&X)",                  IDM_FWD_EXITEXPLORER,0,0
     END
 END
 
@@ -117,27 +117,27 @@ IDR_TIMER MENUEX
 BEGIN
     POPUP "", 0, 0, 0
     BEGIN
-        MENUITEM "&Restart\tR", IDM_TIMER_RESTART, 0, 0
-        MENUITEM "&Stop\tS", IDM_TIMER_STOP, 0, 0
-        MENUITEM "&Hide\tH", IDM_TIMER_HIDE, 0, 0
-        MENUITEM "&Edit\tE", IDM_TIMER_EDIT, 0, 0
+        MENUITEM "重启(&R)\tR", IDM_TIMER_RESTART, 0, 0
+        MENUITEM "停止(&S)\tS", IDM_TIMER_STOP, 0, 0
+        MENUITEM "隐藏(&H)\tH", IDM_TIMER_HIDE, 0, 0
+        MENUITEM "编辑(&E))\tE", IDM_TIMER_EDIT, 0, 0
         MENUITEM "", 0, MFT_SEPARATOR, 0
-        MENUITEM "&Cleanup expired\tC", IDM_TIMER_CLEANUP, 0, 0
-        MENUITEM "Restart list\tShift+R", IDM_TIMER_ALL_RESTART, 0, 0
-        MENUITEM "Restore hidden", IDM_TIMER_RESTORE, 0, MFS_DISABLED
-        MENUITEM "Start all", IDM_TIMER_ALL_START, 0, 0
-        MENUITEM "Stop all", IDM_TIMER_ALL_STOP, 0, 0
+        MENUITEM "清理过期(&C)\tC", IDM_TIMER_CLEANUP, 0, 0
+        MENUITEM "重新启动列表\tShift+R", IDM_TIMER_ALL_RESTART, 0, 0
+        MENUITEM "还原隐藏", IDM_TIMER_RESTORE, 0, MFS_DISABLED
+        MENUITEM "全部开始", IDM_TIMER_ALL_START, 0, 0
+        MENUITEM "全部停止", IDM_TIMER_ALL_STOP, 0, 0
         MENUITEM "", 0, MFT_SEPARATOR, 0
-        POPUP "Timers", IDM_TIMER_LIST, 0, 0
+        POPUP "定时器", IDM_TIMER_LIST, 0, 0
         BEGIN
-            MENUITEM "Add/Edit Timers", IDM_TIMER, 0, 0
+            MENUITEM "添加/编辑定时器", IDM_TIMER, 0, 0
         END
-        POPUP "Options", IDM_TIMER_OPTIONS, 0, 0
+        POPUP "选项", IDM_TIMER_OPTIONS, 0, 0
         BEGIN
-            MENUITEM "Click through when inactive", IDM_TIMER_OPT_OVERLAY, 0, 0
-            MENUITEM "Slightly transparent", IDM_TIMER_OPT_OPACITY_80, 0, 0
-            MENUITEM "Half transparent", IDM_TIMER_OPT_OPACITY_50, 0, 0
-            MENUITEM "Barely visible", IDM_TIMER_OPT_OPACITY_25, 0, 0
+            MENUITEM "不活动时，点击穿透", IDM_TIMER_OPT_OVERLAY, 0, 0
+            MENUITEM "稍微透明", IDM_TIMER_OPT_OPACITY_80, 0, 0
+            MENUITEM "半透明", IDM_TIMER_OPT_OPACITY_50, 0, 0
+            MENUITEM "几乎不可见", IDM_TIMER_OPT_OPACITY_25, 0, 0
         END
 //        MENUITEM "Close\tESC", IDCANCEL, 0, 0
     END
@@ -150,7 +150,7 @@ END
 
 IDD_PAGEABOUT DIALOGEX 0, 0, 310, 200
 STYLE DS_SHELLFONT | WS_CHILD | WS_DISABLED
-CAPTION "About"
+CAPTION "关于"
 FONT 8, "MS Shell Dlg"
 BEGIN
     GROUPBOX        "",IDC_ABT_TITLE,7,3,295,56
@@ -158,78 +158,78 @@ BEGIN
     ICON            IDI_ABOUT_LOGO, IDI_ABOUT_LOGO, 228, 12, 32, 32, SS_ICON | SS_REALSIZEIMAGE
     CTEXT           "White", IDC_ABT_StoicJoker, 261, 19, 38, 8, SS_CENTER
     CTEXT           "Tiger", IDC_ABT_StoicJoker2, 261, 28, 38, 8, SS_CENTER
-    RTEXT           "web:", IDC_ABT_WEB, 64, 13, 29, 9, SS_RIGHT
-    RTEXT           "email:", IDC_ABT_MAIL, 64, 24, 29, 9, SS_RIGHT
-    RTEXT           "forum:", IDC_ABT_FORUM, 64, 35, 29, 9, SS_RIGHT
+    RTEXT           "网站:", IDC_ABT_WEB, 64, 13, 29, 9, SS_RIGHT
+    RTEXT           "电子邮件:", IDC_ABT_MAIL, 64, 24, 29, 9, SS_RIGHT
+    RTEXT           "论坛:", IDC_ABT_FORUM, 64, 35, 29, 9, SS_RIGHT
     LTEXT           "https://github.com/White-Tiger/T-Clock", IDC_ABT_WEBuri, 95, 13, 129, 9, SS_LINK
     LTEXT           "T-Clock@WhiteTiger.e4ward.com", IDC_ABT_MAILuri, 95, 24, 129, 9, SS_LINK
     LTEXT           "http://donationcoder.com/forum/?board=324.0", IDC_ABT_FORUMuri, 95, 35, 129, 9, SS_LINK
-    AUTOCHECKBOX    "Regularly check for updates", IDC_UPDATE_RELEASE, 29, 47, 105, 8
-    AUTOCHECKBOX    "include beta versions", IDC_UPDATE_BETA, 142, 46, 83, 8
-    PUSHBUTTON      "check now", IDC_UPDATE_CHECK, 231, 44, 47, 12
+    AUTOCHECKBOX    "定期检查更新", IDC_UPDATE_RELEASE, 29, 47, 105, 8
+    AUTOCHECKBOX    "包括测试版本", IDC_UPDATE_BETA, 142, 46, 83, 8
+    PUSHBUTTON      "现在检查", IDC_UPDATE_CHECK, 231, 44, 47, 12
 #   ifdef LOGGING
-    AUTOCHECKBOX    "Debug Logging", IDC_LOGGING, 232, 59, 65, 8
+    AUTOCHECKBOX    "调试日志", IDC_LOGGING, 232, 59, 65, 8
 #   endif
-    GROUPBOX        "T-Clock's History", IDC_STATIC, 7, 64, 295, 115
-    LTEXT           "The Original T-Clock was written by Kazubon in the mid to late 90's. It was released with Source Code included so that others could learn from and expand on its features", IDC_STATIC, 13, 74, 283, 20
-    LTEXT           "T-Clock2 is a modified version of Kazubon's Original code written by Two_toNe in 2003. Two_toNe added many new features that allowed it to run properly with the then new Windows XP themes.", IDC_STATIC, 13, 97, 283, 28
+    GROUPBOX        "T-Clock 的历史", IDC_STATIC, 7, 64, 295, 115
+    LTEXT           "原始的 T-Clock 是由Kazubon在90年代中后期写的。 它与源代码一起发布，以便其他人可以学习并扩展其功能", IDC_STATIC, 13, 74, 283, 20
+    LTEXT           "T-Clock2是2003年由Two_toNe编写的Kazubon原始代码的修改版本。Two_toNe添加了许多新功能，使其能够在当时新的Windows XP主题下正常运行。", IDC_STATIC, 13, 97, 283, 28
     LTEXT           "",IDC_ABT_TCLOCK, 13, 127, 283, 50
-    AUTOCHECKBOX    "Start T-Clock Redux when Windows starts", IDC_STARTUP, 42, 184, 222, 11
+    AUTOCHECKBOX    "Windows启动时启动 T-Clock Redux", IDC_STARTUP, 42, 184, 222, 11
 END
 
 IDD_PAGEALARM DIALOGEX 0, 0, 310, 199
 STYLE DS_SHELLFONT | WS_CHILD | WS_DISABLED
-CAPTION "Alarms"
+CAPTION "闹钟"
 FONT 8, "MS Shell Dlg"
 BEGIN
     EDITTEXT        IDC_ALRMMSG_SETTINGS, 221, 27, 76, 12, NOT WS_VISIBLE | ES_AUTOHSCROLL
     EDITTEXT        IDC_ALRMMSG_TEXT, 221, 12, 76, 12, NOT WS_VISIBLE | ES_AUTOHSCROLL | ES_READONLY
-    GROUPBOX        "Alarms", IDC_STATIC, 7, 4, 294, 128
-    RTEXT           "Name", IDC_STATIC, 9, 19, 35, 11, SS_RIGHT
+    GROUPBOX        "闹钟", IDC_STATIC, 7, 4, 294, 128
+    RTEXT           "名称", IDC_STATIC, 9, 19, 35, 11, SS_RIGHT
     COMBOBOX        IDC_COMBOALARM, 48, 17, 114, 120, WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWN
     PUSHBUTTON      "", IDC_DELALARM, 163, 17, 13, 13, BS_ICON
-    AUTOCHECKBOX    "enabled", IDC_ALARM, 182, 19, 42, 11
-    RTEXT           "Time", IDC_LABTIMEALARM, 9, 43, 35, 11, SS_RIGHT
+    AUTOCHECKBOX    "启用", IDC_ALARM, 182, 19, 42, 11
+    RTEXT           "时间", IDC_LABTIMEALARM, 9, 43, 35, 11, SS_RIGHT
     EDITTEXT        IDC_HOURALARM, 48, 41, 26, 13, ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "", IDC_SPINHOUR, UPDOWN_CLASS, UDS_ALIGNRIGHT | UDS_ARROWKEYS | UDS_NOTHOUSANDS | UDS_WRAP | UDS_AUTOBUDDY | UDS_SETBUDDYINT, 62, 41, 11, 12
     CTEXT           ":", IDC_LABCOLON, 75, 43, 8, 10, SS_CENTER
     EDITTEXT        IDC_MINUTEALARM, 84, 41, 26, 13, ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "", IDC_SPINMINUTE, UPDOWN_CLASS, UDS_ALIGNRIGHT | UDS_ARROWKEYS | UDS_NOTHOUSANDS | UDS_WRAP | UDS_AUTOBUDDY | UDS_SETBUDDYINT, 105, 68, 11, 12
-    CTEXT           "AM", IDC_AMPM_DISPLAY, 114, 43, 29, 8, SS_CENTER
-    AUTOCHECKBOX    "PM", IDC_AMPM_CHECK, 147, 43, 23, 8
-    AUTOCHECKBOX    "12H", IDC_12HOURALARM, 174, 43, 27, 8
-    AUTOCHECKBOX    "one-shot", IDC_ALRM_ONCE, 238, 20, 45, 8
-    PUSHBUTTON      "Days...", IDC_ALARMDAY, 242, 32, 33, 14
-    RTEXT           "Action", IDC_LABTIMEALARM_X, 9, 67, 35, 11, SS_RIGHT
+    CTEXT           "上午", IDC_AMPM_DISPLAY, 114, 43, 29, 8, SS_CENTER
+    AUTOCHECKBOX    "下午", IDC_AMPM_CHECK, 147, 43, 23, 8
+    AUTOCHECKBOX    "12小时制", IDC_12HOURALARM, 174, 43, 27, 8
+    AUTOCHECKBOX    "一次性", IDC_ALRM_ONCE, 238, 20, 45, 8
+    PUSHBUTTON      "天...", IDC_ALARMDAY, 242, 32, 33, 14
+    RTEXT           "动作", IDC_LABTIMEALARM_X, 9, 67, 35, 11, SS_RIGHT
     COMBOBOX        IDC_FILEALARM, 48, 65, 229, 120, WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_HASSTRINGS
     PUSHBUTTON      "...", IDC_BROWSEALARM, 278, 65, 12, 12
     CONTROL         IDI_JACKRUSSEL, IDC_BMPJACK, WC_STATIC, NOT WS_VISIBLE | SS_BITMAP | SS_SUNKEN, 12, 78, 44, 50
-    RTEXT           "Test", IDC_LABTESTALARM, 59, 86, 18, 11, SS_RIGHT
+    RTEXT           "测试", IDC_LABTESTALARM, 59, 86, 18, 11, SS_RIGHT
     PUSHBUTTON      "", IDC_TESTALARM, 80, 84, 13, 13, BS_ICON
     AUTOCHECKBOX    "Chime hour", IDC_CHIMEALARM, 115, 85, 53, 11
-    AUTOCHECKBOX    "Repeat:", IDC_REPEATALARM, 228, 85, 37, 11
+    AUTOCHECKBOX    "重复:", IDC_REPEATALARM, 228, 85, 37, 11
     EDITTEXT        IDC_REPEATIMES, 266, 84, 26, 13, ES_CENTER | ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "", IDC_SPINTIMES, UPDOWN_CLASS, UDS_ALIGNRIGHT | UDS_ARROWKEYS | UDS_NOTHOUSANDS | UDS_AUTOBUDDY | UDS_SETBUDDYINT, 280, 84, 11, 12
-    AUTOCHECKBOX    "Show message window", IDC_MSG_ALARM, 83, 104, 90, 8
-    PUSHBUTTON      "window settings", IDCB_MSG_ALARM, 177, 101, 61, 14
-    AUTOCHECKBOX    "Blink clock", IDC_BLINKALARM, 83, 116, 51, 8
+    AUTOCHECKBOX    "显示消息窗口", IDC_MSG_ALARM, 83, 104, 90, 8
+    PUSHBUTTON      "窗口设置", IDCB_MSG_ALARM, 177, 101, 61, 14
+    AUTOCHECKBOX    "闪烁时钟", IDC_BLINKALARM, 83, 116, 51, 8
     GROUPBOX        "", IDC_STATIC, 8, 136, 294, 56
     AUTOCHECKBOX    "Hourly chime", IDC_JIHOU, 3, 136, 54, 8
-    RTEXT           "Action", IDC_LABSOUNDJIHOU, 9, 154, 35, 11, SS_RIGHT
+    RTEXT           "动作", IDC_LABSOUNDJIHOU, 9, 154, 35, 11, SS_RIGHT
     COMBOBOX        IDC_FILEJIHOU, 48, 152, 229, 120, WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_HASSTRINGS
     PUSHBUTTON      "...", IDC_BROWSEJIHOU, 278, 152, 12, 12
-    RTEXT           "Test", IDC_LABTESTJIHOU, 59, 174, 18, 11, SS_RIGHT
+    RTEXT           "测试", IDC_LABTESTJIHOU, 59, 174, 18, 11, SS_RIGHT
     PUSHBUTTON      "", IDC_TESTJIHOU, 80, 172, 13, 13, BS_ICON
     AUTOCHECKBOX    "Chime hour", IDC_REPEATJIHOU, 115, 174, 53, 11
-    AUTOCHECKBOX    "Blink clock", IDC_BLINKJIHOU, 242, 174, 51, 11
+    AUTOCHECKBOX    "闪烁时钟", IDC_BLINKJIHOU, 242, 174, 51, 11
 END
 
 IDD_ALARMDAY DIALOGEX  0, 0, 187, 115
 STYLE DS_SHELLFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Days To Alarm"
+CAPTION "闹钟的日子"
 FONT 8, "MS Shell Dlg"
 BEGIN
-    CONTROL         "Everyday",IDC_ALARMDAY0,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,11,7,51,11
+    CONTROL         "每天",IDC_ALARMDAY0,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,11,7,51,11
     CONTROL         "",IDC_ALARMDAY1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,11,27,51,11
     CONTROL         "",IDC_ALARMDAY2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,72,27,51,11
     CONTROL         "",IDC_ALARMDAY3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,133,27,51,11
@@ -237,129 +237,129 @@ BEGIN
     CONTROL         "",IDC_ALARMDAY5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,72,49,51,11
     CONTROL         "",IDC_ALARMDAY6,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,133,49,51,11
     CONTROL         "",IDC_ALARMDAY7,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,11,71,51,11
-    DEFPUSHBUTTON   "OK",IDOK,38,92,50,15
-    PUSHBUTTON      "Cancel",IDCANCEL,99,92,50,15
+    DEFPUSHBUTTON   "好",IDOK,38,92,50,15
+    PUSHBUTTON      "取消",IDCANCEL,99,92,50,15
 END
 
 IDD_PAGECLOCKTEXT DIALOGEX 0, 0, 310, 200
 STYLE DS_SHELLFONT | WS_CHILD | WS_DISABLED
-CAPTION "Clock Text"
+CAPTION "时钟文本"
 FONT 8, "MS Shell Dlg"
 BEGIN
-    GROUPBOX        "Text options",IDC_STATIC,7,3,295,78
-    RTEXT           "Font:",IDC_STATIC,14,20,26,10
+    GROUPBOX        "文本选项",IDC_STATIC,7,3,295,78
+    RTEXT           "字体:",IDC_STATIC,14,20,26,10
     COMBOBOX        IDC_FONT,46,18,92,120,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "...",IDC_CHOOSEFONT,138,17,13,14
-    RTEXT           "Color:",IDC_STATIC,159,13,40,10
+    RTEXT           "颜色:",IDC_STATIC,159,13,40,10
     COMBOBOX        IDC_COLFORE,205,11,76,180,CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED | WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "...",IDC_COLFORE_BTN,281,11,13,13
-    RTEXT           "Background:",IDC_STATIC,159,27,40,10
+    RTEXT           "背景:",IDC_STATIC,159,27,40,10
     COMBOBOX        IDC_COLBACK,205,25,76,180,CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED | WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "...",IDC_COLBACK_BTN,281,25,13,13
-    RTEXT           "Quality:",IDC_STATIC,14,40,26,10
+    RTEXT           "质量:",IDC_STATIC,14,40,26,10
     COMBOBOX        IDC_FONTQUAL,46,38,82,120,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "OS recommendations are NOT mandatory",IDC_STATIC,134,42,136,8
-    RTEXT           "Size:",IDC_STATIC,14,60,26,10
+    LTEXT           "操作系统建议不是强制性的",IDC_STATIC,134,42,136,8
+    RTEXT           "大小:",IDC_STATIC,14,60,26,10
     COMBOBOX        IDC_FONTSIZE,46,58,38,120,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
-    CONTROL         "Bold",IDC_BOLD,"Button",BS_AUTO3STATE | WS_TABSTOP,106,59,33,11
-    CONTROL         "Italic ",IDC_ITALIC,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,152,59,33,11
-    RTEXT           "Line spacing:",IDC_STATIC,193,60,47,11
+    CONTROL         "粗体",IDC_BOLD,"Button",BS_AUTO3STATE | WS_TABSTOP,106,59,33,11
+    CONTROL         "斜体 ",IDC_ITALIC,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,152,59,33,11
+    RTEXT           "行间距:",IDC_STATIC,193,60,47,11
     EDITTEXT        IDC_LINEHEIGHT,247,59,28,13,ES_AUTOHSCROLL
     CONTROL         "",IDC_SPINLHEIGHT,"msctls_updown32",UDS_WRAP | UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,275,59,9,13
-    GROUPBOX        "Clock size and text position",IDC_STATIC,7,86,295,65
-    RTEXT           "Width:",IDC_STATIC,16,105,40,11
+    GROUPBOX        "时钟大小和文本位置",IDC_STATIC,7,86,295,65
+    RTEXT           "宽度:",IDC_STATIC,16,105,40,11
     EDITTEXT        IDC_CLOCKWIDTH,62,103,36,13,ES_AUTOHSCROLL
     CONTROL         "",IDC_SPINCWIDTH,"msctls_updown32",UDS_WRAP | UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,86,103,11,13
-    RTEXT           "Height:",IDC_STATIC,100,105,36,11
+    RTEXT           "高度:",IDC_STATIC,100,105,36,11
     EDITTEXT        IDC_CLOCKHEIGHT,142,103,36,13,ES_AUTOHSCROLL
     CONTROL         "",IDC_SPINCHEIGHT,"msctls_updown32",UDS_WRAP | UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,166,103,11,13
-    LTEXT           "Change size of clock or reposition its text here.\nLeave at ""0"" for defaults",IDC_STATIC,215,97,80,25
-    RTEXT           "Horizontal:",IDC_HPOS,16,130,40,11
+    LTEXT           "更改时钟大小或在此处重新定位文本。\n默认为""0""",IDC_STATIC,215,97,80,25
+    RTEXT           "水平:",IDC_HPOS,16,130,40,11
     EDITTEXT        IDC_HORIZPOS,62,128,36,13,ES_AUTOHSCROLL
     CONTROL         "",IDC_SPINHPOS,"msctls_updown32",UDS_WRAP | UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,86,128,11,13
-    RTEXT           "Vertical:",IDC_STATIC,100,130,36,11
+    RTEXT           "垂直:",IDC_STATIC,100,130,36,11
     EDITTEXT        IDC_VERTPOS,142,128,36,13,ES_AUTOHSCROLL
     CONTROL         "",IDC_SPINVPOS,"msctls_updown32",UDS_WRAP | UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,166,128,11,13
-    RTEXT           "Rotate:",IDC_STATIC,190,130,26,11
+    RTEXT           "旋转:",IDC_STATIC,190,130,26,11
     EDITTEXT        IDC_ANGLE,222,128,36,13,ES_AUTOHSCROLL
     CONTROL         "",IDC_SPINANGLE,"msctls_updown32",UDS_WRAP | UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,236,128,11,13
-    GROUPBOX        "Transparent taskbar",IDC_STATIC,7,156,295,35
-    RTEXT           "Percentage of transparency:",IDC_STATIC,16,171,97,8
+    GROUPBOX        "任务栏透明",IDC_STATIC,7,156,295,35
+    RTEXT           "透明度百分比:",IDC_STATIC,16,171,97,8
     EDITTEXT        IDC_ALPHATB,118,170,28,13,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "",IDC_SPINALPHA,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,135,170,11,13
-    CTEXT           "Setting this above 85% can cause the taskbar to vanish",IDC_STATIC,165,167,120,19
+    CTEXT           "将此设置为85％以上会导致任务栏消失",IDC_STATIC,165,167,120,19
 END
 
 IDD_PAGEFORMAT DIALOGEX 0, 0, 310, 200
 STYLE DS_SHELLFONT | WS_CHILD | WS_DISABLED
-CAPTION "Time Format"
+CAPTION "时间格式"
 FONT 8, "MS Shell Dlg"
 BEGIN
-    GROUPBOX        "Basic clock configuration",IDC_STATIC,7,3,295,151
-    RTEXT           "Locale:",IDC_STATIC,107,16,25,10
+    GROUPBOX        "基本时钟配置",IDC_STATIC,7,3,295,151
+    RTEXT           "区域设置:",IDC_STATIC,107,16,25,10
     COMBOBOX        IDC_LOCALE,138,14,125,120,CBS_DROPDOWNLIST | CBS_SORT | WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "Date options",IDC_STATIC,17,30,261,44
-    AUTOCHECKBOX    "Month (digit)",IDC_MONTH,24,42,59,11
-    AUTOCHECKBOX    "Month (text)",IDC_MONTHS,24,58,59,11
-    AUTOCHECKBOX    "Day of Month (date)",IDC_DAY,106,42,75,11
-    AUTOCHECKBOX    "Day of Week (text)",IDC_WEEKDAY,106,58,76,11
-    AUTOCHECKBOX    "Year (4 digit)",IDC_YEAR4,212,42,59,11
-    AUTOCHECKBOX    "Year (2 digit)",IDC_YEAR,212,58,59,11
-    GROUPBOX        "Time options",IDC_STATIC,17,78,261,67
-    AUTO3STATE      "New line",IDC_LINEFEED,24,91,65,11
-    AUTOCHECKBOX    "Show 12:xx as 0:xx",IDC_ZERO,106,91,80,11
-    AUTO3STATE      "Hour",IDC_HOUR,24,109,30,11
-    AUTOCHECKBOX    "Minute",IDC_MINUTE,62,109,34,11
-    AUTOCHECKBOX    "Second",IDC_SECOND,106,109,38,11
-    AUTO3STATE      "Internet time (.beats)",IDC_INTERNETTIME,164,109,83,11
-    AUTOCHECKBOX    "12H",IDC_12HOUR,24,128,29,11
-    AUTOCHECKBOX    "AM/PM",IDC_AMPM,62,128,41,11
-    RTEXT           "AM symbol:",IDC_LABAMSYMBOL,110,129,44,11
+    GROUPBOX        "日期选项",IDC_STATIC,17,30,261,44
+    AUTOCHECKBOX    "月份（数字）",IDC_MONTH,24,42,59,11
+    AUTOCHECKBOX    "月份（文字）",IDC_MONTHS,24,58,59,11
+    AUTOCHECKBOX    "月日（日）",IDC_DAY,106,42,75,11
+    AUTOCHECKBOX    "星期几（文本）",IDC_WEEKDAY,106,58,76,11
+    AUTOCHECKBOX    "年份（4位数字）",IDC_YEAR4,212,42,59,11
+    AUTOCHECKBOX    "年份（2位数字）",IDC_YEAR,212,58,59,11
+    GROUPBOX        "时间选项",IDC_STATIC,17,78,261,67
+    AUTO3STATE      "新行",IDC_LINEFEED,24,91,65,11
+    AUTOCHECKBOX    "显示 12:xx 为 0:xx",IDC_ZERO,106,91,80,11
+    AUTO3STATE      "小时",IDC_HOUR,24,109,30,11
+    AUTOCHECKBOX    "分",IDC_MINUTE,62,109,34,11
+    AUTOCHECKBOX    "秒",IDC_SECOND,106,109,38,11
+    AUTO3STATE      "因特网时间 (.beats)",IDC_INTERNETTIME,164,109,83,11
+    AUTOCHECKBOX    "12小时制",IDC_12HOUR,24,128,29,11
+    AUTOCHECKBOX    "上午/下午",IDC_AMPM,62,128,41,11
+    RTEXT           "上午符号:",IDC_LABAMSYMBOL,110,129,44,11
     COMBOBOX        IDC_AMSYMBOL,157,127,30,120,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
-    RTEXT           "PM symbol:",IDC_LABPMSYMBOL,195,129,44,11
+    RTEXT           "下午符号:",IDC_LABPMSYMBOL,195,129,44,11
     COMBOBOX        IDC_PMSYMBOL,242,127,30,120,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "",IDC_STATIC,7,159,295,33
-    AUTOCHECKBOX    "Advanced clock format",IDC_CUSTOM,3,159,89,8
+    AUTOCHECKBOX    "高级时钟格式",IDC_CUSTOM,3,159,89,8
     EDITTEXT        IDC_FORMAT,14,173,282,12,ES_AUTOHSCROLL
-    LTEXT           "See T-Clock Help.rtf for available formats",IDC_FORMAT_LNK,160,164,135,8,SS_LINK
+    LTEXT           "有关可用格式，请参阅T-Clock Help.rtf",IDC_FORMAT_LNK,160,164,135,8,SS_LINK
 END
 
 IDD_PAGEMOUSE DIALOGEX 0, 0, 310, 200
 STYLE DS_SHELLFONT | WS_CHILD | WS_DISABLED
-CAPTION "Mouse"
+CAPTION "鼠标"
 FONT 8, "MS Shell Dlg"
 BEGIN
-    RTEXT           "Drop files:", IDC_STATIC, 3, 9, 42, 10, SS_RIGHT
+    RTEXT           "拖放文件:", IDC_STATIC, 3, 9, 42, 10, SS_RIGHT
     COMBOBOX        IDC_DROPFILES, 49, 7, 75, 120, WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWNLIST
-    RTEXT           "Application", IDC_LABDROPFILESAPP, 135, 9, 35, 11, SS_RIGHT
+    RTEXT           "应用程序", IDC_LABDROPFILESAPP, 135, 9, 35, 11, SS_RIGHT
     EDITTEXT        IDC_DROPFILESAPP, 174, 7, 111, 12, ES_AUTOHSCROLL
     PUSHBUTTON      "...", IDC_DROPFILESAPPSANSHO, 287, 7, 12, 12
-    RTEXT           "Mouse click:", IDC_LABMOUSEBUTTON, 10, 28, 42, 10, SS_RIGHT
+    RTEXT           "鼠标点击:", IDC_LABMOUSEBUTTON, 10, 28, 42, 10, SS_RIGHT
     COMBOBOX        IDC_MOUSEBUTTON, 64, 26, 60, 120, WS_GROUP | WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWNLIST
-    AUTORADIOBUTTON "Single click", IDC_RADSINGLE, 142, 27, 61, 10, WS_GROUP | WS_TABSTOP
-    AUTORADIOBUTTON "Double click", IDC_RADDOUBLE, 215, 27, 66, 10
-    RTEXT           "Action:", IDC_STATIC, 3, 47, 42, 10, SS_RIGHT
+    AUTORADIOBUTTON "单击", IDC_RADSINGLE, 142, 27, 61, 10, WS_GROUP | WS_TABSTOP
+    AUTORADIOBUTTON "双击", IDC_RADDOUBLE, 215, 27, 66, 10
+    RTEXT           "动作:", IDC_STATIC, 3, 47, 42, 10, SS_RIGHT
     COMBOBOX        IDC_MOUSEFUNC, 49, 45, 108, 180, WS_GROUP | WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWNLIST
     EDITTEXT        IDC_MOUSEFILE, 160, 45, 125, 12, ES_AUTOHSCROLL
     PUSHBUTTON      "...", IDC_MOUSEFILEBROWSE, 287, 45, 12, 12
-    GROUPBOX        "Currently configured mouse options:", IDC_STATIC, 6, 62, 298, 113
+    GROUPBOX        "目前配置的鼠标选项:", IDC_STATIC, 6, 62, 298, 113
     CONTROL         "",IDC_LIST,WC_LISTVIEW,WS_TABSTOP|LVS_ALIGNLEFT|LVS_NOSORTHEADER|LVS_SINGLESEL|LVS_REPORT, 8,71,294,103
-    AUTOCHECKBOX    "Mouse-over tooltip text:", IDCB_TOOLTIP, 6, 184, 92, 8
+    AUTOCHECKBOX    "鼠标悬停工具提示文字:", IDCB_TOOLTIP, 6, 184, 92, 8
     EDITTEXT        IDC_TOOLTIP, 102, 182, 202, 12, ES_AUTOHSCROLL
 END
 
 IDD_PAGEQUICKY DIALOGEX 0, 0, 310, 200
 STYLE DS_SHELLFONT | WS_CHILD | WS_DISABLED
-CAPTION "Quicky Menus"
+CAPTION "Quicky 菜单"
 FONT 8, "MS Shell Dlg"
 BEGIN
-    GROUPBOX        "Show or hide Quicky menus",IDC_QMEN_GROUP1,6,6,298,49
-    CONTROL         "Exit Windows menu",IDC_QMEN_EXITWIN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,21,79,11
-    CONTROL         "Quicky launch menu",IDC_QMEN_LAUNCH,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,37,84,11
-    CONTROL         "Sounds && Audio options",IDC_QMEN_AUDIO,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,122,21,92,11
-    CONTROL         "Network drive(s)",IDC_QMEN_NET,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,122,37,69,11
-    CONTROL         "Display Properties",IDC_QMEN_DISPLAY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,225,37,72,11
-    GROUPBOX        "Custom Quicky items (double click item to edit)",IDC_QMEN_GROUP2,6,62,298,132
+    GROUPBOX        "显示或隐藏Quicky菜单",IDC_QMEN_GROUP1,6,6,298,49
+    CONTROL         "能出 Windows 菜单",IDC_QMEN_EXITWIN,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,21,79,11
+    CONTROL         "Quicky启动菜单",IDC_QMEN_LAUNCH,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,37,84,11
+    CONTROL         "声音和音频选项",IDC_QMEN_AUDIO,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,122,21,92,11
+    CONTROL         "网络驱动器",IDC_QMEN_NET,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,122,37,69,11
+    CONTROL         "显示属性",IDC_QMEN_DISPLAY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,225,37,72,11
+    GROUPBOX        "自定义Quicky项目（双击要编辑的项目）",IDC_QMEN_GROUP2,6,62,298,132
     CONTROL         "",IDC_QMEN_LIST,WC_LISTVIEW,WS_TABSTOP|LVS_ALIGNLEFT|LVS_NOSORTHEADER|LVS_SINGLESEL|LVS_REPORT, 7,72,295,122
 END
 
@@ -369,179 +369,179 @@ EXSTYLE WS_EX_CONTROLPARENT
 CAPTION ""
 FONT 8, "MS Shell Dlg"
 BEGIN
-    GROUPBOX        "Menu item text",IDC_STATIC,16,13,171,34
+    GROUPBOX        "菜单项文本",IDC_STATIC,16,13,171,34
     EDITTEXT        IDC_MID_MENUTEXT,24,25,155,14,ES_AUTOHSCROLL
-    GROUPBOX        "Menu item number",IDC_STATIC,200,13,93,34
+    GROUPBOX        "菜单项编号",IDC_STATIC,200,13,93,34
     EDITTEXT        IDC_MID_TASKNUM,208,25,77,14,ES_CENTER | ES_AUTOHSCROLL | ES_READONLY | NOT WS_TABSTOP
-    GROUPBOX        "Target file name && path",IDC_STATIC,16,56,278,34
+    GROUPBOX        "目标文件名和路径",IDC_STATIC,16,56,278,34
     EDITTEXT        IDC_MID_TARGET,24,68,245,14,ES_AUTOHSCROLL
     PUSHBUTTON      "...",IDC_MID_TARGETSEL,273,68,14,14
-    GROUPBOX        "Command-line switches (if needed)",IDC_STATIC,16,100,278,34
+    GROUPBOX        "命令行开关（如果需要）",IDC_STATIC,16,100,278,34
     EDITTEXT        IDC_MID_SWITCHES,24,112,261,14,ES_AUTOHSCROLL
     GROUPBOX        "",IDC_STATIC,16,141,95,34
-    PUSHBUTTON      "Delete menu item",IDC_MID_DELETE,25,153,77,14
+    PUSHBUTTON      "删除菜单项",IDC_MID_DELETE,25,153,77,14
     GROUPBOX        "",IDC_STATIC,123,141,171,34
-    PUSHBUTTON      "Apply",IDC_MID_SAVE,148,153,50,14
-    PUSHBUTTON      "Back",IDC_MID_CANCEL,223,153,50,14
+    PUSHBUTTON      "应用",IDC_MID_SAVE,148,153,50,14
+    PUSHBUTTON      "返回",IDC_MID_CANCEL,223,153,50,14
 END
 
 IDD_PAGEHOTKEY DIALOGEX 0, 0, 310, 200
 STYLE DS_SHELLFONT | WS_CHILD | WS_DISABLED
-CAPTION "HotKeys"
+CAPTION "热键"
 FONT 8, "MS Shell Dlg"
 BEGIN
-    LTEXT           "Timer - Add/Edit", IDC_STATIC, 11, 8, 81, 9, SS_LEFT, WS_EX_RIGHT
+    LTEXT           "定时器 - 添加/编辑", IDC_STATIC, 11, 8, 81, 9, SS_LEFT, WS_EX_RIGHT
     CONTROL         "", HK_TIMER_ADD, HOTKEY_CLASS, WS_TABSTOP, 96, 6, 134, 14, WS_EX_LEFT
-    PUSHBUTTON      "revert", IDC_HK_TIMER_ADD_B, 232, 6, 36, 14, 0, WS_EX_LEFT
-    LTEXT           "Timer - Watch List", IDC_STATIC, 11, 26, 81, 9, SS_LEFT, WS_EX_RIGHT
+    PUSHBUTTON      "还原", IDC_HK_TIMER_ADD_B, 232, 6, 36, 14, 0, WS_EX_LEFT
+    LTEXT           "定时器 - 监视列表", IDC_STATIC, 11, 26, 81, 9, SS_LEFT, WS_EX_RIGHT
     CONTROL         "", HK_TIMER_WATCH, HOTKEY_CLASS, WS_TABSTOP, 96, 24, 134, 14, WS_EX_LEFT
-    PUSHBUTTON      "revert", IDC_HK_TIMER_WATCH_B, 232, 24, 36, 14, 0, WS_EX_LEFT
-    LTEXT           "Stopwatch", IDC_STATIC, 11, 44, 81, 9, SS_LEFT, WS_EX_RIGHT
+    PUSHBUTTON      "还原", IDC_HK_TIMER_WATCH_B, 232, 24, 36, 14, 0, WS_EX_LEFT
+    LTEXT           "秒表", IDC_STATIC, 11, 44, 81, 9, SS_LEFT, WS_EX_RIGHT
     CONTROL         "", HK_STOPWATCH, HOTKEY_CLASS, WS_TABSTOP, 96, 42, 134, 14, WS_EX_LEFT
-    PUSHBUTTON      "revert", IDC_HK_STOPWATCH_B, 232, 42, 36, 14, 0, WS_EX_LEFT
-    LTEXT           "Options", IDC_STATIC, 11, 62, 81, 9, SS_LEFT, WS_EX_RIGHT
+    PUSHBUTTON      "还原", IDC_HK_STOPWATCH_B, 232, 42, 36, 14, 0, WS_EX_LEFT
+    LTEXT           "选项", IDC_STATIC, 11, 62, 81, 9, SS_LEFT, WS_EX_RIGHT
     CONTROL         "", HK_SETTINGS, HOTKEY_CLASS, WS_TABSTOP, 96, 60, 134, 14, WS_EX_LEFT
-    PUSHBUTTON      "revert", IDC_HK_SETTINGS_B, 232, 60, 36, 14, 0, WS_EX_LEFT
-    LTEXT           "Calendar", IDC_STATIC, 11, 80, 81, 9, SS_LEFT, WS_EX_RIGHT
+    PUSHBUTTON      "还原", IDC_HK_SETTINGS_B, 232, 60, 36, 14, 0, WS_EX_LEFT
+    LTEXT           "日历", IDC_STATIC, 11, 80, 81, 9, SS_LEFT, WS_EX_RIGHT
     CONTROL         "", HK_CALENDAR, HOTKEY_CLASS, WS_TABSTOP, 96, 78, 134, 14, WS_EX_LEFT
-    PUSHBUTTON      "revert", IDC_HK_CALENDAR_B, 232, 78, 36, 14, 0, WS_EX_LEFT
-    LTEXT           "Sync time", IDC_STATIC, 11, 98, 81, 9, SS_LEFT, WS_EX_RIGHT
+    PUSHBUTTON      "还原", IDC_HK_CALENDAR_B, 232, 78, 36, 14, 0, WS_EX_LEFT
+    LTEXT           "同步时间", IDC_STATIC, 11, 98, 81, 9, SS_LEFT, WS_EX_RIGHT
     CONTROL         "", HK_SNTP, HOTKEY_CLASS, WS_TABSTOP, 96, 96, 134, 14, WS_EX_LEFT
-    PUSHBUTTON      "revert", IDC_HK_SNTP_B, 232, 96, 36, 14, 0, WS_EX_LEFT
+    PUSHBUTTON      "还原", IDC_HK_SNTP_B, 232, 96, 36, 14, 0, WS_EX_LEFT
 END
 
 IDD_PAGEMISC DIALOGEX 0, 0, 310, 200
 STYLE DS_SHELLFONT | WS_CHILD | WS_DISABLED
-CAPTION "Miscellaneous"
+CAPTION "杂项"
 FONT 8, "MS Shell Dlg"
 BEGIN
     GROUPBOX        "", IDC_STATIC, 6, 3, 296, 117
-    AUTOCHECKBOX    "Use T-Clock's calendar", IDCB_USECALENDAR, 2, 3, 85, 8, WS_TABSTOP, WS_EX_TRANSPARENT
-    AUTOCHECKBOX    "Show day of year", IDCB_SHOW_DOY, 12, 16, 73, 10
-    AUTOCHECKBOX    "Show week numbers", IDCB_SHOWWEEKNUMS, 124, 16, 83, 10
-    AUTOCHECKBOX    "Close calendar on lose focus", IDCB_CLOSECAL, 12, 30, 111, 10
-    AUTOCHECKBOX    "Keep calendar always on top of other windows", IDCB_CALTOPMOST, 12, 44, 166, 10
-    LTEXT           "show:", IDC_CALSTATIC1, 211, 30, 60, 8
+    AUTOCHECKBOX    "使用 T-Clock 的日历", IDCB_USECALENDAR, 2, 3, 85, 8, WS_TABSTOP, WS_EX_TRANSPARENT
+    AUTOCHECKBOX    "显示一年中的第几天", IDCB_SHOW_DOY, 12, 16, 73, 10
+    AUTOCHECKBOX    "显示周数", IDCB_SHOWWEEKNUMS, 124, 16, 83, 10
+    AUTOCHECKBOX    "失去焦点时关闭日历", IDCB_CLOSECAL, 12, 30, 111, 10
+    AUTOCHECKBOX    "将日历始终保持在其他窗口之上", IDCB_CALTOPMOST, 12, 44, 166, 10
+    LTEXT           "显示:", IDC_CALSTATIC1, 211, 30, 60, 8
     EDITTEXT        IDC_CALMONTHS, 216, 40, 27, 13, ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "3", IDC_CALMONTHSPIN, UPDOWN_CLASS, UDS_ALIGNRIGHT | UDS_ARROWKEYS | UDS_WRAP | UDS_AUTOBUDDY | UDS_HOTTRACK | UDS_SETBUDDYINT, 231, 40, 11, 14
-    LTEXT           "month(s)", IDC_CALMONTHS_LABEL, 247, 43, 30, 8
+    LTEXT           "月", IDC_CALMONTHS_LABEL, 247, 43, 30, 8
     EDITTEXT        IDC_CALMONTHSPAST, 216, 58, 27, 13, ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "1", IDC_CALMONTHPASTSPIN, UPDOWN_CLASS, UDS_ALIGNRIGHT | UDS_ARROWKEYS | UDS_WRAP | UDS_AUTOBUDDY | UDS_HOTTRACK | UDS_SETBUDDYINT, 231, 58, 11, 14
-    LTEXT           "past month(s)", IDC_CALMONTHSPAST_LABEL, 247, 60, 46, 8
-    PUSHBUTTON      "configure colors", IDC_CALCOLORS, 216, 84, 79, 14
-    GROUPBOX        "(Windows user settings)", IDC_STATIC, 12, 58, 197, 56, 0, WS_EX_RIGHT
-    LTEXT           "First week of year:", IDC_STATIC, 18, 70, 62, 8
+    LTEXT           "过去的月份", IDC_CALMONTHSPAST_LABEL, 247, 60, 46, 8
+    PUSHBUTTON      "配置颜色", IDC_CALCOLORS, 216, 84, 79, 14
+    GROUPBOX        "(Windows用户设置)", IDC_STATIC, 12, 58, 197, 56, 0, WS_EX_RIGHT
+    LTEXT           "一年中的第一周:", IDC_STATIC, 18, 70, 62, 8
     COMBOBOX        IDC_FIRSTWEEK, 81, 68, 122, 120, WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWNLIST
-    LTEXT           "First day of week:", IDC_STATIC, 18, 86, 62, 8
+    LTEXT           "一周的第一天:", IDC_STATIC, 18, 86, 62, 8
     COMBOBOX        IDC_FIRSTDAY, 81, 84, 122, 120, WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWNLIST
-    AUTOCHECKBOX    "Restore previous calendar   (!! global Win10 setting !!)", IDC_OLDCALENDAR, 18, 100, 185, 8
-    GROUPBOX        "Windows 2000 only", IDCB_TRANS2KICONS_GRP, 6, 130, 134, 30
-    AUTOCHECKBOX    "Transparent icon text labels", IDCB_TRANS2KICONS, 12, 144, 104, 10
+    AUTOCHECKBOX    "恢复上一个日历   (!! 全局Win10设置 !!)", IDC_OLDCALENDAR, 18, 100, 185, 8
+    GROUPBOX        "仅限Windows 2000", IDCB_TRANS2KICONS_GRP, 6, 130, 134, 30
+    AUTOCHECKBOX    "透明图标文本标签", IDCB_TRANS2KICONS, 12, 144, 104, 10
     GROUPBOX        "Windows XP+", IDCB_MONOFF_ONLOCK_GRP, 148, 130, 154, 30
-    AUTOCHECKBOX    "Turn off monitors on workstation lock", IDCB_MONOFF_ONLOCK, 154, 144, 132, 10
+    AUTOCHECKBOX    "锁定工作站时关闭显示器", IDCB_MONOFF_ONLOCK, 154, 144, 132, 10
     GROUPBOX        "Windows 8+", IDCB_MULTIMON_GRP, 6, 164, 296, 30
-    AUTOCHECKBOX    "Duplicate clock on each additional taskbar", IDCB_MULTIMON, 12, 178, 274, 10
+    AUTOCHECKBOX    "每个附加任务栏上都有重复的时钟", IDCB_MULTIMON, 12, 178, 274, 10
 END
 
 IDD_CALENDAR_COLOR DIALOG 0, 0, 172, 240
 STYLE DS_3DLOOK | DS_CENTER | DS_MODALFRAME | DS_SHELLFONT | WS_CAPTION | WS_VISIBLE | WS_POPUP | WS_SYSMENU
-CAPTION "Calendar colors"
+CAPTION "日历颜色"
 FONT 8, "Ms Shell Dlg"
 {
-    DEFPUSHBUTTON   "Save", IDOK, 31, 222, 50, 14, 0, WS_EX_LEFT
-    PUSHBUTTON      "Close", IDCANCEL, 90, 222, 50, 14, 0, WS_EX_LEFT
+    DEFPUSHBUTTON   "保存", IDOK, 31, 222, 50, 14, 0, WS_EX_LEFT
+    PUSHBUTTON      "关闭", IDCANCEL, 90, 222, 50, 14, 0, WS_EX_LEFT
     COMBOBOX        IDC_CAL_PRESET, 0, 0, 172, 120, WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWNLIST | CBS_HASSTRINGS, WS_EX_LEFT
     CONTROL         "", IDC_CAL_PREVIEW, MONTHCAL_CLASS, MCS_WEEKNUMBERS, 0, 13, 172, 106, WS_EX_LEFT
     GROUPBOX        "", IDC_STATIC, 0, 115, 172, 104, 0, WS_EX_LEFT
-    RTEXT           "outer background:", IDC_STATIC, 4, 126, 70, 8, SS_RIGHT, WS_EX_LEFT
+    RTEXT           "外部背景:", IDC_STATIC, 4, 126, 70, 8, SS_RIGHT, WS_EX_LEFT
     COMBOBOX        IDC_CAL_OUTER, 77, 124, 70, 180, WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED, WS_EX_LEFT
     PUSHBUTTON      "...", IDC_CAL_OUTER_BTN, 147, 124, 13, 13, 0, WS_EX_LEFT
-    RTEXT           "text:", IDC_STATIC, 4, 141, 70, 8, SS_RIGHT, WS_EX_LEFT
+    RTEXT           "文本:", IDC_STATIC, 4, 141, 70, 8, SS_RIGHT, WS_EX_LEFT
     COMBOBOX        IDC_CAL_FORE, 77, 139, 70, 180, WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED, WS_EX_LEFT
     PUSHBUTTON      "...", IDC_CAL_FORE_BTN, 147, 139, 13, 13, 0, WS_EX_LEFT
-    RTEXT           "background:", IDC_STATIC, 4, 156, 70, 8, SS_RIGHT, WS_EX_LEFT
+    RTEXT           "背景:", IDC_STATIC, 4, 156, 70, 8, SS_RIGHT, WS_EX_LEFT
     COMBOBOX        IDC_CAL_BACK, 77, 154, 70, 180, WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED, WS_EX_LEFT
     PUSHBUTTON      "...", IDC_CAL_BACK_BTN, 147, 154, 13, 13, 0, WS_EX_LEFT
-    RTEXT           "month:", IDC_STATIC, 4, 171, 70, 8, SS_RIGHT, WS_EX_LEFT
+    RTEXT           "月:", IDC_STATIC, 4, 171, 70, 8, SS_RIGHT, WS_EX_LEFT
     COMBOBOX        IDC_CAL_TITLE, 77, 169, 70, 180, WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED, WS_EX_LEFT
     PUSHBUTTON      "...", IDC_CAL_TITLE_BTN, 147, 169, 13, 13, 0, WS_EX_LEFT
-    RTEXT           "month background:", IDC_STATIC, 4, 186, 70, 8, SS_RIGHT, WS_EX_LEFT
+    RTEXT           "月背景:", IDC_STATIC, 4, 186, 70, 8, SS_RIGHT, WS_EX_LEFT
     COMBOBOX        IDC_CAL_TITLE_BG, 77, 184, 70, 180, WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED, WS_EX_LEFT
     PUSHBUTTON      "...", IDC_CAL_TITLE_BG_BTN, 147, 184, 13, 13, 0, WS_EX_LEFT
-    RTEXT           "trailing days:", IDC_STATIC, 4, 201, 70, 8, SS_RIGHT, WS_EX_LEFT
+    RTEXT           "尾部日期:", IDC_STATIC, 4, 201, 70, 8, SS_RIGHT, WS_EX_LEFT
     COMBOBOX        IDC_CAL_TRAIL, 77, 199, 70, 180, WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWNLIST | CBS_OWNERDRAWFIXED, WS_EX_LEFT
     PUSHBUTTON      "...", IDC_CAL_TRAIL_BTN, 147, 199, 13, 13, 0, WS_EX_LEFT
 }
 
 IDD_TIMER DIALOGEX 0, 0, 187, 130
 STYLE DS_SHELLFONT | DS_MODALFRAME | DS_SETFOREGROUND | DS_CENTER | WS_CAPTION | WS_SYSMENU | WS_VISIBLE
-CAPTION "Timer"
+CAPTION "定时器"
 FONT 8, "MS Shell Dlg"
 BEGIN
-    RTEXT           "Timer Name",IDC_STATIC,7,10,38,8
+    RTEXT           "定时器名称",IDC_STATIC,7,10,38,8
     COMBOBOX        IDC_TIMERNAME,50,8,113,120,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
     PUSHBUTTON      "",IDC_TIMERDEL,165,8,13,13,BS_ICON
     EDITTEXT        IDC_TIMERSECOND,139,30,25,13,ES_AUTOHSCROLL
     CONTROL         "",IDC_TIMERSECSPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,153,30,11,13
-    CTEXT           "Seconds",IDC_STATIC,137,44,29,8
+    CTEXT           "秒",IDC_STATIC,137,44,29,8
     EDITTEXT        IDC_TIMERMINUTE,97,30,25,13,ES_AUTOHSCROLL
     CONTROL         "",IDC_TIMERMINSPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,111,30,11,13
-    CTEXT           "Minutes",IDC_STATIC,97,44,25,8
+    CTEXT           "分",IDC_STATIC,97,44,25,8
     EDITTEXT        IDC_TIMERHOUR,57,30,25,13,ES_AUTOHSCROLL
     CONTROL         "",IDC_TIMERHORSPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,71,30,11,13
-    CTEXT           "Hours",IDC_STATIC,60,44,20,8
+    CTEXT           "小时",IDC_STATIC,60,44,20,8
     EDITTEXT        IDC_TIMERDAYS,18,30,25,13,ES_AUTOHSCROLL
     CONTROL         "",IDC_TIMERDAYSPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,32,30,11,13
-    CTEXT           "Days",IDC_STATIC,21,44,17,8
-    RTEXT           "File",IDC_STATIC,7,65,14,8
+    CTEXT           "天",IDC_STATIC,21,44,17,8
+    RTEXT           "文件",IDC_STATIC,7,65,14,8
     COMBOBOX        IDC_TIMERFILE,26,63,138,120,WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_HASSTRINGS
     PUSHBUTTON      "...",IDC_TIMERFILEBROWSE,165,63,13,13
-    RTEXT           "Test",IDC_STATIC,7,88,28,8
+    RTEXT           "测试",IDC_STATIC,7,88,28,8
     PUSHBUTTON      "",IDC_TIMERTEST,40,85,13,14,BS_ICON
-    CONTROL         "Repeat",IDC_TIMERREPEAT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,83,88,39,8
-    CONTROL         "Blink clock",IDC_TIMERBLINK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,127,88,51,8
-    DEFPUSHBUTTON   "Start",IDOK,9,107,50,14
-    PUSHBUTTON      "Stop",IDCB_STOPTIMER,68,107,50,14,WS_DISABLED
-    PUSHBUTTON      "Cancel",IDCANCEL,128,107,50,14
+    CONTROL         "重复",IDC_TIMERREPEAT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,83,88,39,8
+    CONTROL         "闪烁时钟",IDC_TIMERBLINK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,127,88,51,8
+    DEFPUSHBUTTON   "开始",IDOK,9,107,50,14
+    PUSHBUTTON      "停止",IDCB_STOPTIMER,68,107,50,14,WS_DISABLED
+    PUSHBUTTON      "取消",IDCANCEL,128,107,50,14
 END
 
 IDD_STOPWATCH DIALOGEX 0, 0, 170, 123
 STYLE DS_CENTER | WS_THICKFRAME | DS_SETFOREGROUND | DS_SHELLFONT | WS_CAPTION | WS_VISIBLE | WS_POPUP | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "Stopwatch"
+CAPTION "秒表"
 FONT 8, "MS Shell Dlg"
 BEGIN // 3 button layout with width: 48, offsets: 6,61,116
-    DEFPUSHBUTTON   "Start (s)", IDC_SW_START, 0, 108, 78, 15
+    DEFPUSHBUTTON   "开始 (s)", IDC_SW_START, 0, 108, 78, 15
 //    PUSHBUTTON      "Stop (d)",IDC_SW_STOP,61,104,48,14
-    PUSHBUTTON      "Reset (w)", IDC_SW_RESET, 79, 108, 78, 15, WS_DISABLED
+    PUSHBUTTON      "重置 (w)", IDC_SW_RESET, 79, 108, 78, 15, WS_DISABLED
     PUSHBUTTON      "(e)", IDC_SW_EXPORT, 158, 108, 12, 15, BS_CENTER
-    GROUPBOX        "Time Elapsed", IDC_STATIC, 1, 1, 167, 26
+    GROUPBOX        "已用时间", IDC_STATIC, 1, 1, 167, 26
     EDITTEXT        IDC_SW_ELAPSED, 5, 10, 125, 13, ES_CENTER | ES_AUTOHSCROLL | ES_READONLY
-    PUSHBUTTON      "Lap (a)", IDC_SW_LAP, 133, 9, 32, 14
+    PUSHBUTTON      "圈 (a)", IDC_SW_LAP, 133, 9, 32, 14
     CONTROL         "", IDC_SW_LAPS, WC_LISTVIEW, WS_TABSTOP | LVS_ALIGNLEFT | LVS_NOSORTHEADER | LVS_SINGLESEL | LVS_REPORT, 1, 27, 168, 81
 END
 
 IDD_STOPWATCH_EXPORT DIALOGEX 0, 0, 335, 226
 STYLE DS_CENTER | DS_MODALFRAME | DS_SHELLFONT | WS_CAPTION | WS_VISIBLE | WS_POPUP | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "StopWatch export"
+CAPTION "秒表导出"
 FONT 8, "MS Shell Dlg"
 BEGIN
-    DEFPUSHBUTTON   "Process", IDOK, 179, 210, 50, 14
-    PUSHBUTTON      "Save as...", IDC_SWE_EXPORT, 231, 210, 50, 14
-    PUSHBUTTON      "Close", IDCANCEL, 283, 210, 50, 14
+    DEFPUSHBUTTON   "处理", IDOK, 179, 210, 50, 14
+    PUSHBUTTON      "另存为...", IDC_SWE_EXPORT, 231, 210, 50, 14
+    PUSHBUTTON      "关闭", IDCANCEL, 283, 210, 50, 14
     GROUPBOX        "Header / Footer (start with \\n for footer, otherwise it's a header)", IDC_STATIC, 2, 1, 331, 27
     EDITTEXT        IDC_SWE_TOTAL, 5, 11, 325, 14, ES_AUTOHSCROLL
-    GROUPBOX        "Laps (\\n=new line, \\t=time, \\#=lap(s), \\l=lap time, \\f=lap flags)", IDC_STATIC, 2, 29, 331, 27
+    GROUPBOX        "圈 (\\n=新行, \\t=时间, \\#=圈, \\l=圈时间, \\f=圈标记)", IDC_STATIC, 2, 29, 331, 27
     EDITTEXT        IDC_SWE_LAP, 5, 39, 325, 14, ES_AUTOHSCROLL
-    GROUPBOX        "Output", IDC_STATIC, 2, 62, 331, 146
+    GROUPBOX        "输出", IDC_STATIC, 2, 62, 331, 146
     EDITTEXT        IDC_SWE_OUT, 5, 72, 325, 133, WS_VSCROLL | ES_AUTOHSCROLL | ES_MULTILINE
 END
 
 IDD_TIMERVIEW DIALOGEX 0, 0, 186, 93
 STYLE DS_SHELLFONT | WS_CAPTION | WS_VISIBLE | WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_POPUP | WS_THICKFRAME | WS_SYSMENU
 EXSTYLE WS_EX_WINDOWEDGE | WS_EX_APPWINDOW | WS_EX_LAYERED
-CAPTION "Timer Watch"
+CAPTION "定时器监视"
 FONT 8, "MS Shell Dlg"
 BEGIN
     CONTROL         "", IDC_LIST, WC_LISTVIEW, WS_TABSTOP | LVS_ALIGNLEFT | LVS_SHOWSELALWAYS | LVS_SINGLESEL | LVS_REPORT, 0, 0, 186, 93
@@ -550,57 +550,57 @@ END
 IDD_SNTPCONFIG DIALOGEX 0, 0, 310, 200
 STYLE DS_CENTER | DS_SETFOREGROUND | DS_SHELLFONT | WS_CAPTION | WS_VISIBLE | WS_POPUP | WS_THICKFRAME | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "Configure SNTP Client"
+CAPTION "配置 SNTP 客户端"
 FONT 8, "MS Shell Dlg", 0, 0, 1
 BEGIN
-    DEFPUSHBUTTON   "OK", IDOK, 192, 179, 50, 14
-    PUSHBUTTON      "Cancel", IDCANCEL, 250, 179, 50, 14
-    GROUPBOX        "Synchronization Source", IDC_STATIC, 7, 3, 296, 31
-    RTEXT           "Time Server:", IDC_STATIC, 16, 16, 49, 8, SS_RIGHT
+    DEFPUSHBUTTON   "好", IDOK, 192, 179, 50, 14
+    PUSHBUTTON      "取消", IDCANCEL, 250, 179, 50, 14
+    GROUPBOX        "同步源", IDC_STATIC, 7, 3, 296, 31
+    RTEXT           "时间服务器:", IDC_STATIC, 16, 16, 49, 8, SS_RIGHT
     COMBOBOX        IDCBX_NTPSERVER, 67, 14, 158, 120, WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_HASSTRINGS
     PUSHBUTTON      "X", IDCB_DELSERVER, 225, 14, 14, 13, BS_ICON
-    PUSHBUTTON      "Sync now", IDCB_SYNCNOW, 246, 13, 50, 14
-    GROUPBOX        "Options", IDC_STATIC, 7, 38, 296, 28
-    AUTOCHECKBOX    "Save Log", IDCBX_SNTPLOG, 19, 50, 47, 8
-    AUTOCHECKBOX    "Message Box", IDCBX_SNTPMESSAGE, 70, 50, 59, 8
-    RTEXT           "Sound:", IDC_STATIC, 136, 50, 24, 8, SS_RIGHT
+    PUSHBUTTON      "现在同步", IDCB_SYNCNOW, 246, 13, 50, 14
+    GROUPBOX        "选项", IDC_STATIC, 7, 38, 296, 28
+    AUTOCHECKBOX    "保存日志", IDCBX_SNTPLOG, 19, 50, 47, 8
+    AUTOCHECKBOX    "消息框", IDCBX_SNTPMESSAGE, 70, 50, 59, 8
+    RTEXT           "声音:", IDC_STATIC, 136, 50, 24, 8, SS_RIGHT
     COMBOBOX        IDCBX_SYNCSOUND, 163, 48, 118, 120, WS_TABSTOP | WS_VSCROLL | CBS_DROPDOWN | CBS_AUTOHSCROLL | CBS_HASSTRINGS
     PUSHBUTTON      "...", IDCB_SYNCSOUNDBROWSE, 281, 48, 14, 13
     GROUPBOX        "", IDC_STATIC, 7, 76, 296, 99
     CONTROL         "", IDC_LIST, WC_LISTVIEW, WS_TABSTOP | LVS_ALIGNLEFT | LVS_NOSORTHEADER | LVS_SINGLESEL | LVS_REPORT, 11, 84, 288, 88
-    PUSHBUTTON      "Clear log", IDCB_CLEAR, 10, 179, 50, 14
+    PUSHBUTTON      "清除日志", IDCB_CLEAR, 10, 179, 50, 14
 END
 
 IDD_ALARMMSG DIALOGEX 0, 0, 255, 168
 STYLE DS_SHELLFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Alert Window Options"
+CAPTION "警报窗口选项"
 FONT 8, "MS Shell Dlg"
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,60,148,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,150,148,50,14
-    GROUPBOX        "Text Options",IDC_STATIC,7,3,241,49
-    CONTROL         "Always on top",IDC_ALRMMSG_TOPMOST,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,188,3,56,8,WS_EX_TRANSPARENT
-    LTEXT           "Title:",IDC_STATIC,21,16,16,8
+    DEFPUSHBUTTON   "好",IDOK,60,148,50,14
+    PUSHBUTTON      "取消",IDCANCEL,150,148,50,14
+    GROUPBOX        "文本选项",IDC_STATIC,7,3,241,49
+    CONTROL         "总在最上",IDC_ALRMMSG_TOPMOST,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,188,3,56,8,WS_EX_TRANSPARENT
+    LTEXT           "标题:",IDC_STATIC,21,16,16,8
     EDITTEXT        IDC_ALRMMSG_CAPT,41,14,200,13,ES_AUTOHSCROLL | ES_READONLY
-    LTEXT           "Text:",IDC_STATIC,21,34,17,8
+    LTEXT           "文本:",IDC_STATIC,21,34,17,8
     EDITTEXT        IDC_ALRMMSG_TEXT,41,32,200,13,ES_AUTOHSCROLL
     GROUPBOX        "",IDC_STATIC,7,56,241,87
-    AUTOCHECKBOX    "Bounce it!", IDC_ALRMMSG_BOUN_ENABLE, 3, 56, 43, 8
-    RTEXT           "Speed:",IDC_ALRMMSG_SPEED_ST,21,71,24,8
+    AUTOCHECKBOX    "反弹它！", IDC_ALRMMSG_BOUN_ENABLE, 3, 56, 43, 8
+    RTEXT           "速度:",IDC_ALRMMSG_SPEED_ST,21,71,24,8
     EDITTEXT        IDC_ALRMMSG_SPEED,48,68,42,13,ES_CENTER | ES_AUTOHSCROLL
     CONTROL         "",IDC_ALRMMSG_SPEED_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,89,68,11,12
     RTEXT           "Delta:",IDC_ALRMMSG_DELTA_ST,109,71,24,8
     EDITTEXT        IDC_ALRMMSG_DELTA,136,68,42,13,ES_CENTER | ES_AUTOHSCROLL
     CONTROL         "",IDC_ALRMMSG_DELTA_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,178,68,11,12
-    PUSHBUTTON      "Test",IDC_ALRMMSG_TEST,200,67,42,14
-    CONTROL         "Randomize Bounce Height",IDC_ALRMMSG_RAND,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,31,94,99,8
-    RTEXT           "Skew Factor:",IDC_ALRMMSG_SKEW_ST,140,95,43,8
+    PUSHBUTTON      "测试",IDC_ALRMMSG_TEST,200,67,42,14
+    CONTROL         "随机化反弹高度",IDC_ALRMMSG_RAND,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,31,94,99,8
+    RTEXT           "倾斜因子:",IDC_ALRMMSG_SKEW_ST,140,95,43,8
     EDITTEXT        IDC_ALRMMSG_SKEW,186,93,35,13,ES_CENTER | ES_AUTOHSCROLL
     CONTROL         "",IDC_ALRMMSG_SKEW_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,220,93,11,12
-    RTEXT           "Bounce Time:",IDC_ALRMMSG_BOUN_ST,33,120,44,8
+    RTEXT           "反弹时间:",IDC_ALRMMSG_BOUN_ST,33,120,44,8
     EDITTEXT        IDC_ALRMMSG_BOUN,79,118,35,13,ES_CENTER | ES_AUTOHSCROLL
     CONTROL         "",IDC_ALRMMSG_BOUN_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,113,118,11,12
-    RTEXT           "Pause Time:",IDC_ALRMMSG_PAWS_ST,140,120,43,8
+    RTEXT           "暂停时间:",IDC_ALRMMSG_PAWS_ST,140,120,43,8
     EDITTEXT        IDC_ALRMMSG_PAWS,186,118,35,13,ES_CENTER | ES_AUTOHSCROLL
     CONTROL         "",IDC_ALRMMSG_PAWS_SPIN,"msctls_updown32",UDS_SETBUDDYINT | UDS_ALIGNRIGHT | UDS_AUTOBUDDY | UDS_ARROWKEYS,220,118,11,12
 END
@@ -634,33 +634,33 @@ IDI_JACKRUSSEL          BITMAP                  "JackRussel.bmp"
 
 STRINGTABLE 
 BEGIN
-    IDS_LIST_TASKNAME       "Menu text"
-    IDS_LIST_TASKTARGET     "Target file"
-    IDS_LIST_TASKSWITCHES   "Switches"
+    IDS_LIST_TASKNAME       "菜单文本"
+    IDS_LIST_TASKTARGET     "目标文件"
+    IDS_LIST_TASKSWITCHES   "开关"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_NOTFOUNDCLOCK       "Failed to customize clock"
+    IDS_NOTFOUNDCLOCK       "无法定制时钟"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_ADDALARM            "<Add New...>"
-    IDS_MMFILE              "Multimedia  (*.wav,*.mid,*.pcb,...)"
-    IDS_ALLFILE             "All (*.*)"
-    IDS_PROGRAMFILE         "Program (*.exe,*.cmd)"
+    IDS_ADDALARM            "<新增...>"
+    IDS_MMFILE              "多媒体  (*.wav,*.mid,*.pcb,...)"
+    IDS_ALLFILE             "所有 (*.*)"
+    IDS_PROGRAMFILE         "程序 (*.exe,*.cmd)"
 END
 
 STRINGTABLE 
 BEGIN
-    IDS_NONE                "<  disabled  >"
-    IDS_RECYCLE             "Recycle Bin"
-    IDS_OPENBY              "Open with..."
-    IDS_COPYTO              "Copy to..."
-    IDS_MOVETO              "Move to..."
-    IDS_LABPROGRAM          "Application"
-    IDS_LABFOLDER           "Folder"
+    IDS_NONE                "<  禁用  >"
+    IDS_RECYCLE             "回收站"
+    IDS_OPENBY              "打开方式..."
+    IDS_COPYTO              "复制到..."
+    IDS_MOVETO              "移动到..."
+    IDS_LABPROGRAM          "应用程序"
+    IDS_LABFOLDER           "文件夹"
 END
 
 #endif    // English (U.S.) resources
