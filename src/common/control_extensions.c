@@ -94,6 +94,8 @@ void ListView_SortItemsExEx(HWND list, int column, sort_func_t func, intptr_t us
 	sort_wrapper_t wrapper;
 	LONG_PTR last_sort = 0;
 	LVCOLUMN col;
+	const wchar_t kAscending[]        = L" âŹ¶",
+	kDescending[_countof(kAscending)] = L" âŹ·";
 	const wchar_t* indicator;
 	wchar_t column_name[64];
 	wrapper.func = func;
